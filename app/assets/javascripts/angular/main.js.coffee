@@ -1,8 +1,9 @@
-@Guru = angular.module "Guru", [
+@Guru = angular.module("Guru", [
   'ngCookies'
   'ng-token-auth'
   'ui.router'
-]
+  'templates'
+])
 
 @Guru.config ["$httpProvider", ($httpProvider) ->
   $httpProvider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr "content"

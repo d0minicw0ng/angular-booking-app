@@ -1,0 +1,34 @@
+#wrapper(ng-controller="DashboardController")
+  #sidebar-wrapper
+    %ul.sidebar-nav
+      %li.sidebar-brand
+        %a{:href => "#"}
+          Massage Guru
+      %li
+        %a{:href => "#"} Dashboard
+      %li
+        %a{:href => "#"} Shortcuts
+      %li
+        %a{:href => "#"} Overview
+      %li
+        %a{:href => "#"} Events
+      %li
+        %a{:href => "#"} About
+      %li
+        %a{:href => "#"} Services
+      %li
+        %a{:href => "#"} Contact
+
+  #page-content-wrapper
+    %a#menu-toggle.btn.btn-default{:href => "#menu-toggle"} Toggle Menu
+    .container-fluid
+      .row
+        #dashboard-container.col-lg-12(ui-view)
+
+:javascript
+  $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+  });
+
+

@@ -9,7 +9,7 @@
       "angular"           : "latest",
       "ng-token-auth"     : "latest",
       "angular-cookies"   : "latest",
-      "angular-ui-router" : "latest"
+      "angular-ui-router" : "latest",
     }
   }
 }
