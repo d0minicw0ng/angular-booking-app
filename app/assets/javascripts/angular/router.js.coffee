@@ -10,8 +10,8 @@
       templateUrl: "dashboard.html"
 
     .state "dashboard.employees",
-      url: "/dashboard/employees"
-      templateUrl: "dashboard.employees.html"
+      url: "/employees"
+      templateUrl: "dashboard/employees/dashboard.employees.html"
 
   $urlRouterProvider.otherwise "/"
   $locationProvider.html5Mode true
