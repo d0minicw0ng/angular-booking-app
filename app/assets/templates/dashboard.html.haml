@@ -5,15 +5,15 @@
         %a(href="#")
           Massage Guru
       %li
-        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_APPOINTMENTS" | translate }}
+        %a(ui-sref="dashboard.appointments") {{ "DASHBOARD.MANAGE_YOUR_APPOINTMENTS" | translate }}
       %li
-        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_CUSTOMERS" | translate }}
+        %a(ui-sref="dashboard.customers") {{ "DASHBOARD.MANAGE_YOUR_CUSTOMERS" | translate }}
       %li
-        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_EMPLOYEES" | translate }}
+        %a(ui-sref="dashboard.employees") {{ "DASHBOARD.MANAGE_YOUR_EMPLOYEES" | translate }}
 
   #page-content-wrapper
     %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
-    %button.btn.btn-danger(ng-controller="SessionsController" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
+    %button.btn.btn-danger(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
     .container-fluid
       .row
         #dashboard-container.col-lg-12(ui-view)

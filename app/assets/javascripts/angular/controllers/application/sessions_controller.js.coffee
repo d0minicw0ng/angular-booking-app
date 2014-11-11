@@ -12,7 +12,7 @@
         $("body").prepend("<div class='alert alert-#{alertClass} fade in' role='alert'>#{translation}</div>")
         setTimeout ->
           $(".alert-#{alertClass}").alert "close",
-        , 5000
+        , 2000
 
     $scope.submitRegistration = ->
       $auth.submitRegistration($scope.registrationForm)
@@ -28,18 +28,20 @@
       $auth.submitLogin($scope.loginForm).then ->
         $("#login-form").modal "hide"
         $scope.loginForm = {}
+        # TODO: I am not sure why the modal hiding is not fast enough,
+        # adding 250 ms for now until I know what the problem is.
         setTimeout ->
           $state.go "dashboard"
           $scope.showFlashMessage("SIGNIN_SUCCESS")
         , 250
 
     $scope.$on 'auth:login-success', (ev, user) ->
-      $rootScope.currentUser = user
+      $scope.setCurrentUser user
 
     $scope.signOut = ->
       $auth.signOut()
         .then (resp) ->
-          $rootScope.currentUser = null
+          $scope.setCurrentUser null
           $state.go "root"
           $scope.showFlashMessage("SIGNOUT_SUCCESS", "danger")
         .catch (err) ->
