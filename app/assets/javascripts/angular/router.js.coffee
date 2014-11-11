@@ -3,7 +3,7 @@
   $stateProvider
     .state "root",
       url: "/"
-      templateUrl: "landing.html"
+      templateUrl: "root.html"
 
     .state "dashboard",
       url: "/dashboard"
