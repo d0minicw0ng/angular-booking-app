@@ -1,9 +1,10 @@
-%ng-include{:src => "'sessions/signin_modal.html'"}
-%ng-include{:src => "'sessions/signup_modal.html'"}
-%button.btn.btn-primary{"data-target" => "#login-form", "data-toggle" => "modal", :type => "button"}
-  {{ "SIGNIN" | translate }}
-%button.btn.btn-primary{"data-target" => "#signup-form", "data-toggle" => "modal", :type => "button"}
-  {{ "SIGNUP" | translate }}
+%ng-include(src="'sessions/signin_modal.html'")
+%ng-include(src="'sessions/signup_modal.html'")
+
+%button.btn.btn-primary{"data-target" => "#login-form", "data-toggle" => "modal", type: "button"}
+  {{ "SESSION.SIGNIN" | translate }}
+%button.btn.btn-primary{"data-target" => "#signup-form", "data-toggle" => "modal", type: "button"}
+  {{ "SESSION.SIGNUP" | translate }}
 
 %span(ng-controller="LocaleController")
   %h3.flag-icon.background.flag-icon.squared.flag-icon-us(ng-click="changeLocale('en')" href="#")

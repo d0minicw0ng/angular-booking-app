@@ -8,7 +8,7 @@
   ($scope, $auth, $location, $translate, $rootScope, $state) ->
 
     $scope.showFlashMessage = (successMessage, alertClass="success") ->
-      $translate(successMessage).then (translation) ->
+      $translate("SESSION.#{successMessage}").then (translation) ->
         $("body").prepend("<div class='alert alert-#{alertClass} fade in' role='alert'>#{translation}</div>")
         setTimeout ->
           $(".alert-#{alertClass}").alert "close",

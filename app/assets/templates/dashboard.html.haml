@@ -2,18 +2,18 @@
   #sidebar-wrapper
     %ul.sidebar-nav
       %li.sidebar-brand
-        %a{:href => "#"}
+        %a(href="#")
           Massage Guru
       %li
-        %a{:href => "#"} {{ "MANAGE_YOUR_APPOINTMENTS" | translate }}
+        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_APPOINTMENTS" | translate }}
       %li
-        %a{:href => "#"} {{ "MANAGE_YOUR_CUSTOMERS" | translate }}
+        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_CUSTOMERS" | translate }}
       %li
-        %a{:href => "#"} {{ "MANAGE_YOUR_EMPLOYEES" | translate }}
+        %a{:href => "#"} {{ "DASHBOARD.MANAGE_YOUR_EMPLOYEES" | translate }}
 
   #page-content-wrapper
-    %a#menu-toggle.btn.btn-default{:href => "#menu-toggle"} Toggle Menu
-    %button.btn.btn-danger(ng-controller="SessionsController" ng-click="signOut()") {{ "SIGNOUT" | translate }}
+    %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
+    %button.btn.btn-danger(ng-controller="SessionsController" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
     .container-fluid
       .row
         #dashboard-container.col-lg-12(ui-view)
