@@ -5,26 +5,20 @@
         %a{:href => "#"}
           Massage Guru
       %li
-        %a{:href => "#"} Dashboard
+        %a{:href => "#"} {{ "MANAGE_YOUR_APPOINTMENTS" | translate }}
       %li
-        %a{:href => "#"} Shortcuts
+        %a{:href => "#"} {{ "MANAGE_YOUR_CUSTOMERS" | translate }}
       %li
-        %a{:href => "#"} Overview
-      %li
-        %a{:href => "#"} Events
-      %li
-        %a{:href => "#"} About
-      %li
-        %a{:href => "#"} Services
-      %li
-        %a{:href => "#"} Contact
+        %a{:href => "#"} {{ "MANAGE_YOUR_EMPLOYEES" | translate }}
 
   #page-content-wrapper
     %a#menu-toggle.btn.btn-default{:href => "#menu-toggle"} Toggle Menu
+    %button.btn.btn-danger(ng-controller="SessionsController" ng-click="signOut()") {{ "SIGNOUT" | translate }}
     .container-fluid
       .row
         #dashboard-container.col-lg-12(ui-view)
 
+// TODO: move it somewhere, or just not use toggle at all
 :javascript
   $("#menu-toggle").click(function(e) {
       e.preventDefault();

@@ -2,6 +2,7 @@
   'ngCookies'
   'ng-token-auth'
   'ui.router'
+  'pascalprecht.translate'
   'templates'
 ])
 
