@@ -5,7 +5,8 @@
   "$translate"
   "$rootScope"
   "$state"
-  ($scope, $auth, $location, $translate, $rootScope, $state) ->
+  "$http"
+  ($scope, $auth, $location, $translate, $rootScope, $state, $http) ->
 
     $scope.showFlashMessage = (successMessage, alertClass="success") ->
       $translate("SESSION.#{successMessage}").then (translation) ->
@@ -15,14 +16,30 @@
         , 2000
 
     $scope.submitRegistration = ->
+      # TODO: Is this quite clumsy to do the whole getting company's name here?
+      companyName = $scope.private._getUsersCompanyName()
+
       $auth.submitRegistration($scope.registrationForm)
         .then (resp) ->
-          $("#signup-form").modal "hide"
-          $scope.registrationForm = {}
-          $scope.showFlashMessage("SIGNUP_SUCCESS")
+          # TODO: Is this better to be moved to a service?
+          userId = resp.data.data.id
+          $http.post("/api/v1/companies", {
+            company:
+              name: companyName
+              employee_ids: [userId]
+          }).then ->
+            $("#signup-form").modal "hide"
+            $scope.registrationForm = {}
+            $scope.showFlashMessage("SIGNUP_SUCCESS")
 
         .catch (err) ->
           console.log err
+
+    $scope.private =
+      _getUsersCompanyName: ->
+        companyName = $scope.registrationForm.company_name
+        delete $scope.registrationForm.company_name
+        companyName
 
     $scope.submitLogin = ->
       $auth.submitLogin($scope.loginForm).then ->
@@ -48,7 +65,7 @@
           console.log err
 
     $scope.$on 'auth:email-confirmation-success', (ev, user) ->
-      $rootScope.currentUser = user
+      $scope.setCurrentUser user
       $state.go "dashboard"
       $scope.showFlashMessage("EMAIL_CONFIRMED")
   ]

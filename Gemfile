@@ -30,3 +30,4 @@ gem 'bower-rails'
 gem 'devise_token_auth'
 gem 'omniauth'
 
+gem 'rspec-rails'

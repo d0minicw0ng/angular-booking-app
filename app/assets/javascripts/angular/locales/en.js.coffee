@@ -7,6 +7,8 @@
       EMAIL: "Email"
       PASSWORD: "Password"
       PASSWORD_CONFIRMATION: "Password Confirmation"
+    COMPANY:
+      NAME_OF_YOUR_COMPANY: "Your Company's Name"
     SESSION:
       SIGNIN: "Sign in"
       SIGNUP: "Sign up"
