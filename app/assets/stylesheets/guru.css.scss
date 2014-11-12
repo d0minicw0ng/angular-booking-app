@@ -1,0 +1,7 @@
+.alert {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  right: 20px;
+  z-index: 1001; // sidebar z-index is 1000
+}
