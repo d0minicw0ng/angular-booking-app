@@ -1,12 +1,10 @@
 @Guru.controller "SessionsController", [
   "$scope"
   "$auth"
-  "$location"
   "$translate"
-  "$rootScope"
   "$state"
   "$http"
-  ($scope, $auth, $location, $translate, $rootScope, $state, $http) ->
+  ($scope, $auth, $translate, $state, $http) ->
 
     $scope.showFlashMessage = (successMessage, alertClass="success") ->
       $translate("SESSION.#{successMessage}").then (translation) ->
@@ -52,13 +50,9 @@
           $scope.showFlashMessage("SIGNIN_SUCCESS")
         , 250
 
-    $scope.$on 'auth:login-success', (ev, user) ->
-      $scope.setCurrentUser user
-
     $scope.signOut = ->
       $auth.signOut()
         .then (resp) ->
-          $scope.setCurrentUser null
           $state.go "root"
           $scope.showFlashMessage("SIGNOUT_SUCCESS", "danger")
         .catch (err) ->

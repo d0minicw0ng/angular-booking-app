@@ -1,9 +1,14 @@
-%table.table.table-striped
-  %tr
-    %td FAKE DATA
-    %td 222-222-222
-    %td 5
-  %tr
-    %td FAKE DATA
-    %td 222-222-222
-    %td 5
+%ng-include(src="'dashboard/employees/add_employee_modal.html'")
+%button#add-employee.btn.btn-primary(data-target="#add-employee-form" data-toggle="modal" type="button")
+  {{ "USER.ADD_AN_EMPLOYEE" | translate }}
+
+%div(ng-controller="EmployeesController")
+  %table#employees-table.table.table-striped(st-table="employees")
+    %thead
+      %tr
+        %th.name id
+        %th.email email
+    %tbody
+      %tr(ng-repeat="employee in employees")
+        %td.name {{ employee.id }}
+        %td.email {{ employee.email }}

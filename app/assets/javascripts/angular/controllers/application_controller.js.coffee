@@ -1,5 +1,18 @@
-@Guru.controller "ApplicationController", ($scope) ->
+@Guru.controller "ApplicationController", [
+  "$scope"
+  "$cookieStore"
+  "$auth",
+  ($scope, $cookieStore, $auth) ->
 
-  $scope.currentUser = null
-  $scope.setCurrentUser = (user) ->
-    $scope.currentUser = user
+    $scope.setCurrentUser = (user) ->
+      $cookieStore.put "currentUser", user
+
+    $scope.currentUser = ->
+      $cookieStore.get "currentUser"
+
+    $scope.$on "auth:login-success", (ev, user) ->
+      $scope.setCurrentUser user
+
+    $scope.$on "auth:logout-success", ->
+      $cookieStore.remove "currentUser"
+  ]

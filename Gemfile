@@ -27,7 +27,7 @@ gem 'byebug', group: [:development, :test]
 gem 'angular-rails-templates'
 gem 'bower-rails'
 
-gem 'devise_token_auth'
+gem 'devise_token_auth', git: "git@github.com:lynndylanhurley/devise_token_auth.git"
 gem 'omniauth'
 
 gem 'rspec-rails'

@@ -1,9 +1,9 @@
 @Guru = angular.module("Guru", [
-  'ngCookies'
-  'ng-token-auth'
-  'ui.router'
-  'pascalprecht.translate'
-  'templates'
+  "ngCookies"
+  "ng-token-auth"
+  "ui.router"
+  "pascalprecht.translate"
+  "templates"
 ])
 
 @Guru.config ["$httpProvider", ($httpProvider) ->

@@ -6,12 +6,12 @@
   "vendor": {
     "name": "bower-rails generated vendor assets",
     "dependencies": {
-      "angular"           : "latest",
-      "ng-token-auth"     : "latest",
-      "angular-cookies"   : "latest",
-      "angular-ui-router" : "latest",
-      "angular-translate" : "latest",
-      "flag-icon-css"     : "latest"
+      "angular"             : "latest",
+      "ng-token-auth"       : "latest",
+      "angular-cookies"     : "latest",
+      "angular-ui-router"   : "latest",
+      "angular-translate"   : "latest",
+      "flag-icon-css"       : "latest"
     }
   }
 }

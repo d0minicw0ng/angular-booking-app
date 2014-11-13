@@ -12,11 +12,9 @@
         %a(ui-sref="dashboard.employees") {{ "DASHBOARD.MANAGE_YOUR_EMPLOYEES" | translate }}
 
   #page-content-wrapper
-    %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
-    // TODO: BUGFIX -> ng-if currentUser returns false if I refresh the page
-    // https://docs.angularjs.org/api/ngCookies/service/$cookieStore
-    -# %button.btn.btn-danger(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
-    %button.btn.btn-danger(ng-controller="SessionsController" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
+    .pull-right
+      %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
+      %button.btn.btn-danger(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
     .container-fluid
       .row
         #dashboard-container.col-lg-12(ui-view)

@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   # TODO: This does not apply to customers!
   # It needs a `where` scope when we introduce user types
   belongs_to :company
+
 end

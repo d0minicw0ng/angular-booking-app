@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:lynndylanhurley/devise_token_auth.git
+  revision: 8fc49a5485a4819674e377b099b36c8d9b3ae0c9
+  specs:
+    devise_token_auth (0.1.30.beta5)
+      devise (~> 3.3)
+      rails (~> 4.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -55,9 +63,6 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_token_auth (0.1.29)
-      devise (~> 3.2)
-      rails (~> 4.1)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.2)
@@ -77,7 +82,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    minitest (5.4.2)
+    minitest (5.4.3)
     multi_json (1.10.1)
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
@@ -167,7 +172,7 @@ DEPENDENCIES
   bower-rails
   byebug
   coffee-rails (~> 4.0.0)
-  devise_token_auth
+  devise_token_auth!
   execjs
   haml
   jbuilder (~> 2.0)

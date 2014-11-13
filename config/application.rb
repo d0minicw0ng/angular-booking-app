@@ -24,8 +24,9 @@ module MassageGuru
     config.generators do |g|
       g.stylesheets false
       g.javascripts false
-      g.helper false
+      g.view false
       g.view_specs false
+      g.helper false
       g.helper_specs false
       g.test_framework :rspec, fixture: false
     end
