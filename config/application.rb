@@ -30,5 +30,7 @@ module MassageGuru
       g.helper_specs false
       g.test_framework :rspec, fixture: false
     end
+
+    config.filter_parameters += [:password, :password_confirmation]
   end
 end
