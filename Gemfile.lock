@@ -84,6 +84,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.4.3)
     multi_json (1.10.1)
+    ng-rails-csrf (0.1.0)
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
@@ -177,6 +178,7 @@ DEPENDENCIES
   haml
   jbuilder (~> 2.0)
   jquery-rails
+  ng-rails-csrf
   omniauth
   pg
   rails (= 4.1.4)

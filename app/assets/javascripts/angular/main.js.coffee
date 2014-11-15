@@ -4,11 +4,8 @@
   "ui.router"
   "pascalprecht.translate"
   "templates"
+  "ng-rails-csrf"
 ])
-
-@Guru.config ["$httpProvider", ($httpProvider) ->
-  $httpProvider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr "content"
-]
 
 @Guru.config ($authProvider) ->
   # TODO: The apiUrl should depend on the environment.

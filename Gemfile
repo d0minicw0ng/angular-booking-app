@@ -31,3 +31,4 @@ gem 'devise_token_auth', git: "git@github.com:lynndylanhurley/devise_token_auth.
 gem 'omniauth'
 
 gem 'rspec-rails'
+gem 'ng-rails-csrf'
