@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :companies, only: [:create]
       resources :users, only: [:index]
+      resource :appointments, only: [:create, :index]
     end
   end
 

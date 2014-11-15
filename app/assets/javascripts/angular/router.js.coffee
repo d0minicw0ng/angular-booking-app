@@ -19,5 +19,12 @@
         auth: ($auth) ->
           $auth.validateUser()
 
+    .state "dashboard.appointments",
+      url: "/appointments"
+      templateUrl: "dashboard/appointments/dashboard.appointments.html"
+      resolve:
+        auth: ($auth) ->
+          $auth.validateUser()
+
   $urlRouterProvider.otherwise "/"
   $locationProvider.html5Mode true

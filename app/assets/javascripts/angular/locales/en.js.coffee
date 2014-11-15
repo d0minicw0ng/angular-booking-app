@@ -11,6 +11,14 @@
       PASSWORD: "Password"
       PASSWORD_CONFIRMATION: "Password Confirmation"
       ADD_AN_EMPLOYEE: "Add an employee"
+    APPOINTMENT:
+      DATE: "Date"
+      START_TIME: "Start Time"
+      END_TIME: "End Time"
+      DURATION: "Duration"
+      MASSEUR: "Masseur"
+      CUSTOMER: "Customer"
+      ADD_AN_APPOINTMENT: "Add an appointment"
     COMPANY:
       NAME_OF_YOUR_COMPANY: "Your Company's Name"
     SESSION:

@@ -1,0 +1,23 @@
+%div(ng-controller="AppointmentsController")
+
+  %ng-include(src="'dashboard/appointments/add_appointment_modal.html'")
+  %button#add-appointment.btn.btn-primary(data-target="#add-appointment-form" data-toggle="modal" type="button")
+    {{ "APPOINTMENT.ADD_AN_APPOINTMENT" | translate }}
+
+  %table#appointments-table.table.table-striped(st-table="appointments")
+    %thead
+      %tr
+        %th.id id
+        %th.date {{ "APPOINTMENT.DATE" | translate }}
+        %th.start-time {{ "APPOINTMENT.START_TIME" | translate }}
+        %th.end-time {{ "APPOINTMENT.END_TIME" | translate }}
+        %th.masseur {{ "APPOINTMENT.MASSEUR" | translate }}
+        %th.customer {{ "APPOINTMENT.CUSTOMER" | translate }}
+    %tbody
+      %tr(ng-repeat="appointment in appointments")
+        %td.id {{ appointment.id }}
+        %td.date {{ appointment.date }}
+        %td.start-time {{ appointment.start_time }}
+        %td.end-time {{ appointment.end_time }}
+        %td.masseur {{ appointment.masseur }}
+        %td.customer {{ appointment.customer }}

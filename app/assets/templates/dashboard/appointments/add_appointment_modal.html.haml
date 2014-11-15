@@ -1,0 +1,23 @@
+#add-appointment-form.modal.fade(aria-hidden=true aria-labelledby="Signup" role="dialog" tabindex="-1")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title {{ "APPOINTMENT.ADD_AN_APPOINTMENT" | translate }}
+      .modal-body(ng-controller="CreateAppointmentsController")
+        %form(ng-init="appointment = {}" ng-submit="addAppointment()" role="form")
+          .form-group
+            %label {{ "APPOINTMENT.DATE" | translate }}
+            %input#date.form-control(name="date" ng-model="appointment.date" required="required" type="date")
+          .form-group
+            %label {{ "APPOINTMENT.START_TIME" | translate }}
+            %input#start-time.form-control(name="start_time" ng-model="appointment.start_time" required="required" type="time")
+          .form-group
+            %label {{ "APPOINTMENT.DURATION" | translate }}
+            %select.form-control(name="duration" ng-model="appointment.duration" required="required")
+          .form-group
+            %label {{ "APPOINTMENT.MASSEUR" | translate }}
+            %select.form-control(name="masseur_id" ng-model="appointment.masseur_id" required="required")
+          .form-group
+            %label {{ "APPOINTMENT.CUSTOMER" | translate }}
+            %select.form-control(name="customer_id" ng-model="appointment.customer_id" required="required")
+          %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}
