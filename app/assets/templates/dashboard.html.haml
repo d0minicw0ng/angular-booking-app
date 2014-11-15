@@ -12,12 +12,12 @@
         %a(ui-sref="dashboard.employees") {{ "DASHBOARD.MANAGE_YOUR_EMPLOYEES" | translate }}
 
   #page-content-wrapper
-    .pull-right
+    #navigations.pull-right
       %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
-      %button.btn.btn-danger(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
-    .container-fluid
+      %button.btn.btn-danger#sign-out(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
+    #dashboard-wrapper.container-fluid
       .row
-        #dashboard-container.col-lg-12(ui-view)
+        #dashboard.col-lg-12(ui-view)
 
 // TODO: move it somewhere, or just not use toggle at all
 :javascript
