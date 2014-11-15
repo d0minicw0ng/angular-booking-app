@@ -1,19 +1,18 @@
 @Guru.service "EmployeesService", ["$http", "$auth", ($http, $auth) ->
 
-  createEmployee: (scope) ->
+  createEmployee: (registrationForm) ->
     randomPassword = @_generateRandomPassword()
-    scope.registrationForm.password = randomPassword
-    scope.registrationForm.password_confirmation = randomPassword
-    scope.registrationForm.company_id = scope.currentUser().company_id
+    registrationForm.password = randomPassword
+    registrationForm.password_confirmation = randomPassword
 
-    $auth.submitRegistration(scope.registrationForm)
+    $auth.submitRegistration registrationForm
 
   _generateRandomPassword: ->
     Math.random().toString(36).substring 2,10
 
   getEmployees: (scope) ->
-    $http(url: "/api/v1/users", method: "GET", params: { company_id: scope.currentUser().company_id })
+    $http(url: "/api/v1/users", method: "GET")
       .then (data, status, headers, config) ->
-        scope.employees = data.data
+        data.data
 
 ]

@@ -1,8 +1,8 @@
 @Guru.controller "EmployeesController", [
   "$scope"
-  "$http"
   "EmployeesService"
-  ($scope, $http, EmployeesService) ->
+  ($scope, EmployeesService) ->
     $scope.employees = []
-    EmployeesService.getEmployees $scope
+    EmployeesService.getEmployees().then (employees) ->
+      $scope.employees = employees
   ]

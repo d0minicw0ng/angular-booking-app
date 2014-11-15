@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20141112160732) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "name"
-    t.string   "nickname"
-    t.string   "image"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
     t.string   "provider"
     t.string   "uid",                    default: "", null: false
     t.text     "tokens"

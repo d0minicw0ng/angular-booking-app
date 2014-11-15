@@ -4,6 +4,8 @@
     LANGUAGE: "Language"
     ADD: "Add"
     USER:
+      FIRST_NAME: "First Name"
+      LAST_NAME: "Last Name"
       NAME: "Name"
       EMAIL: "Email"
       PASSWORD: "Password"

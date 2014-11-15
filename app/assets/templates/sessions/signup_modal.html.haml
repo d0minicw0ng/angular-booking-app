@@ -9,8 +9,11 @@
             %label {{ "USER.EMAIL" | translate }}
             %input.form-control(name="email" ng-model="registrationForm.email" required="required" type="email")
           .form-group
-            %label {{ "USER.NAME" | translate }}
-            %input.form-control(name="name" ng-model="registrationForm.name" required="required" type="text")
+            %label {{ "USER.FIRST_NAME" | translate }}
+            %input.form-control(name="first_name" ng-model="registrationForm.first_name" required="required" type="text")
+          .form-group
+            %label {{ "USER.LAST_NAME" | translate }}
+            %input.form-control(name="last_name" ng-model="registrationForm.last_name" required="required" type="text")
           .form-group
             %label {{ "COMPANY.NAME_OF_YOUR_COMPANY" | translate }}
             %input.form-control(name="company_name" ng-model="registrationForm.company_name" required="required" type="text")

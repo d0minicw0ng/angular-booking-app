@@ -5,4 +5,12 @@ class User < ActiveRecord::Base
   # It needs a `where` scope when we introduce user types
   belongs_to :company
 
+  # TODO: more attributes
+  # address
+  # department / type
+  # emergency contact
+  # photo
+  # pay rate
+  # maybe start date/ hire date?
+
 end
