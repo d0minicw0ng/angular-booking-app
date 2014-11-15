@@ -10,7 +10,7 @@
         $("#add-employee-form").modal "hide"
         $scope.registrationForm = {}
         $scope.alertSuccess "SESSION.EMPLOYEE_ADDED"
-        # TODO: add the employee to the table.
+        $scope.$emit "employee-created", resp.data.data
       .catch (err) ->
         console.log err
 
