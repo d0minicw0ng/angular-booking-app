@@ -11,6 +11,7 @@
       PASSWORD: "Password"
       PASSWORD_CONFIRMATION: "Password Confirmation"
       ADD_AN_EMPLOYEE: "Add an employee"
+      ADD_A_CUSTOMER: "Add a customer"
     APPOINTMENT:
       DATE: "Date"
       START_TIME: "Start Time"
@@ -30,6 +31,7 @@
       SIGNOUT_SUCCESS: "You have signed out."
       EMAIL_CONFIRMED: "Your email has been confirmed."
       EMPLOYEE_ADDED: "You have successfully added an employee."
+      CUSTOMER_ADDED: "You have successfully added a customer."
     DASHBOARD:
       MANAGE_YOUR_APPOINTMENTS: "Manage your appointments"
       MANAGE_YOUR_CUSTOMERS: "Manage your customers"

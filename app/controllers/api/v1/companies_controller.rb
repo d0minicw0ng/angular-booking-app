@@ -6,8 +6,7 @@ class Api::V1::CompaniesController < ApplicationController
     employee = User.find params[:company][:employee_id]
     ActiveRecord::Base.transaction do
       company.save
-      employee.company_id = company.id
-      employee.save
+      employee.update_attributes company_id: company.id
     end
     render json: company.as_json, status: :ok
   end

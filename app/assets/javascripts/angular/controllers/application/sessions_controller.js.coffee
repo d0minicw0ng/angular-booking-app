@@ -1,3 +1,4 @@
+# TODO: Need a SessionsService to handle the logic.
 @Guru.controller "SessionsController", [
   "$scope"
   "$auth"
@@ -9,6 +10,7 @@
     $scope.submitRegistration = ->
       # TODO: Is this quite clumsy to do the whole getting company's name here?
       companyName = $scope.private._getUsersCompanyName()
+      $scope.registrationForm.role = "admin"
 
       $auth.submitRegistration($scope.registrationForm)
         .then (resp) ->
@@ -35,9 +37,10 @@
         # TODO: I am not sure why the modal hiding is not fast enough,
         # adding 250 ms for now until I know what the problem is.
         setTimeout ->
-          $state.go "dashboard"
+          $state.go "dashboard.appointments"
           $scope.alertSuccess "SESSION.SIGNIN_SUCCESS"
         , 250
+      .catch (err) -> console.log err
 
     $scope.signOut = ->
       $auth.signOut()

@@ -1,9 +1,9 @@
-#add-employee-form.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Signup", role: "dialog", tabindex: "-1"}
+#add-customer-form.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Signup", role: "dialog", tabindex: "-1"}
   .modal-dialog
     .modal-content
       .modal-header
-        %h4.modal-title {{ "USER.ADD_AN_EMPLOYEE" | translate }}
-      .modal-body(ng-controller="CreateEmployeesController")
+        %h4.modal-title {{ "USER.ADD_A_CUSTOMER" | translate }}
+      .modal-body(ng-controller="CreateCustomersController")
         %form{"ng-init" => "registrationForm = {}", "ng-submit" => "submitRegistration()", role: "form"}
           .form-group
             %label {{ "USER.EMAIL" | translate }}
@@ -15,4 +15,3 @@
             %label {{ "USER.LAST_NAME" | translate }}
             %input.form-control(name="last_name" ng-model="registrationForm.last_name" required="required" type="text")
           %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}
-          //TODO: A bunch of things to be added later.

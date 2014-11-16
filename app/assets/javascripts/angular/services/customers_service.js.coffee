@@ -1,18 +1,18 @@
-@Guru.service "EmployeesService", ["$http", "$auth", ($http, $auth) ->
+@Guru.service "CustomersService", ["$http", "$auth", ($http, $auth) ->
 
-  createEmployee: (registrationForm) ->
+  createCustomer: (registrationForm) ->
     randomPassword = @_generateRandomPassword()
     registrationForm.password = randomPassword
     registrationForm.password_confirmation = randomPassword
-    # TODO: add user type with select option in the form
+    registrationForm.role = "customer"
 
     $auth.submitRegistration registrationForm
 
   _generateRandomPassword: ->
     Math.random().toString(36).substring 2,10
 
-  getEmployees: ->
-    $http(url: "/api/v1/employees", method: "GET")
+  getCustomers: ->
+    $http(url: "/api/v1/customers", method: "GET")
       .then (data, status, headers, config) ->
         data.data
 

@@ -1,0 +1,19 @@
+%div(ng-controller="CustomersController")
+
+  %ng-include(src="'dashboard/customers/add_customer_modal.html'")
+  %button#add-customer.btn.btn-primary(data-target="#add-customer-form" data-toggle="modal" type="button")
+    {{ "USER.ADD_A_CUSTOMER" | translate }}
+
+  %table#customers-table.table.table-striped(st-table="customers")
+    %thead
+      %tr
+        %th.id id
+        %th.first-name {{ "USER.FIRST_NAME" | translate }}
+        %th.last-name {{ "USER.LAST_NAME" | translate }}
+        %th.email {{ "USER.EMAIL" | translate }}
+    %tbody
+      %tr(ng-repeat="customer in customers")
+        %td.id {{ customer.id }}
+        %td.first-name {{ customer.first_name }}
+        %td.last-name {{ customer.last_name }}
+        %td.email {{ customer.email }}

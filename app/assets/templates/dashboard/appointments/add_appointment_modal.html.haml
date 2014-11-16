@@ -7,17 +7,17 @@
         %form(ng-init="appointment = {}" ng-submit="addAppointment()" role="form")
           .form-group
             %label {{ "APPOINTMENT.DATE" | translate }}
-            %input#date.form-control(name="date" ng-model="appointment.date" required="required" type="text" pick-a-date="date")
+            %input#date.form-control(name="date" ng-model="appointment.date" required="required" type="text" pick-a-date="date" pick-a-date-options="pickADateOptions")
           .form-group
             %label {{ "APPOINTMENT.START_TIME" | translate }}
-            %input#start-time.form-control(name="start_time" ng-model="appointment.start_time" required="required" type="text" pick-a-time="time")
+            %input#start-time.form-control(name="start_time" ng-model="appointment.start_time" required="required" type="text" pick-a-time="time" pick-a-time-options="pickATimeOptions")
           .form-group
             %label {{ "APPOINTMENT.DURATION" | translate }}
             %select#duration.form-control(name="duration" ng-model="appointment.duration" required="required" chosen)
           .form-group
             %label {{ "APPOINTMENT.MASSEUR" | translate }}
-            %select#masseur.form-control(name="masseur_id" ng-model="appointment.masseur_id" required="required" chosen)
+            %select#masseur.form-control(name="masseur_id" ng-model="appointment.masseur_id" ng-options="masseur.first_name for masseur in masseurs track by masseur.id" required="required" chosen)
           .form-group
             %label {{ "APPOINTMENT.CUSTOMER" | translate }}
-            %select#customer.form-control(name="customer_id" ng-model="appointment.customer_id" required="required" chosen)
+            %select#customer.form-control(name="customer_id" ng-model="appointment.customer_id" ng-options ="customer.first_name for customer in customers track by customer.id" required="required" chosen)
           %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}
