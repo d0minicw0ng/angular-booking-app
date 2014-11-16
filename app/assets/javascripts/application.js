@@ -1,11 +1,22 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require_tree ../../../vendor/assets/bower_components/angular
-//= require angular-rails-templates
-//= require_tree ../../../vendor/assets/bower_components/chosen
+//= require ../../../vendor/assets/bower_components/angular/angular.min
 //= require ng-rails-csrf
-//= require_tree ../../../vendor/assets/bower_components/
+//= require angular-rails-templates
+
+//= require_tree ../../../vendor/assets/bower_components/chosen
+//= require_tree ../../../vendor/assets/bower_components/angular-chosen-localytics
+
+//= require ../../../vendor/assets/bower_components/angular-cookies/angular-cookies.min
+//= require ../../../vendor/assets/bower_components/angular-translate/angular-translate.min
+//= require_tree ../../../vendor/assets/bower_components/angular-ui-router
+//= require ../../../vendor/assets/bower_components/ng-token-auth/dist/ng-token-auth
+
+//= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker
+//= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker.date
+//= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker.time
+//= require ../../../vendor/assets/bower_components/angular-native-picker/src/directives
 
 //= require ./angular/main
 //= require ./angular/router

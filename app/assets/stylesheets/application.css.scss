@@ -14,5 +14,10 @@
  *= require_self
  */
 
+//= require ../../../vendor/assets/bower_components/angular/angular-csp
 //= require_tree ../../../vendor/assets/bower_components/flag-icon-css
 //= require_tree ../../../vendor/assets/bower_components/chosen
+//= require ../../../vendor/assets/bower_components/angular-native-picker/build/themes/default
+//= require ../../../vendor/assets/bower_components/angular-native-picker/build/themes/default.date
+//= require ../../../vendor/assets/bower_components/angular-native-picker/build/themes/default.time
+//= require ../../../vendor/assets/bower_components/angular-native-picker/build/themes/rtl

@@ -12,3 +12,18 @@
 // is not visible in the first place. It's not pretty, but it
 // solves the issue.
 .chosen-container { min-width: 220px !important; }
+
+// NOTE: Fix pickadate.js CSS possibly incompatibility with bootstrap
+// modal
+.picker--time {
+  ul.picker__list {
+    padding: 0.75em 0 0.2em;
+    .picker__list-item {
+      list-style: none;
+      width: 100%;
+    }
+    li:last-child {
+      list-style: none;
+    }
+  }
+}

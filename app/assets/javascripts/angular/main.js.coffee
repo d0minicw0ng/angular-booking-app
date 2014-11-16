@@ -6,6 +6,7 @@
   "templates"
   "ng-rails-csrf"
   "localytics.directives"
+  "angular-datepicker"
 ])
 
 
