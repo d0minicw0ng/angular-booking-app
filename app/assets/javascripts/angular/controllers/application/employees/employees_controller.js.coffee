@@ -4,6 +4,7 @@
   ($scope, EmployeesService) ->
     $scope.employees = []
     EmployeesService.getEmployees().then (employees) ->
+      console.log employees
       $scope.employees = employees
 
     $scope.$on "employee-created", (ev, employee) ->

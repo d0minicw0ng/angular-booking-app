@@ -17,6 +17,7 @@
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker.date
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker.time
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/directives
+//= require ../../../vendor/assets/bower_components/angular-smart-table/dist/smart-table.min
 
 //= require ./angular/main
 //= require ./angular/router

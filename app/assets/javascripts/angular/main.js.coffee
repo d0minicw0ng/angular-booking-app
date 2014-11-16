@@ -7,6 +7,7 @@
   "ng-rails-csrf"
   "localytics.directives"
   "angular-datepicker"
+  "smart-table"
 ])
 
 

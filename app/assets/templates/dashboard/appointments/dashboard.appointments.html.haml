@@ -4,7 +4,7 @@
   %button#add-appointment.btn.btn-primary(data-target="#add-appointment-form" data-toggle="modal" type="button")
     {{ "APPOINTMENT.ADD_AN_APPOINTMENT" | translate }}
 
-  %table#appointments-table.table.table-striped(st-table="appointments")
+  %table#appointments-table.table.table-striped(st-table="appointmentsCollection" st-safe-src="appointments")
     %thead
       %tr
         %th.id id
@@ -14,7 +14,7 @@
         %th.masseur {{ "APPOINTMENT.MASSEUR" | translate }}
         %th.customer {{ "APPOINTMENT.CUSTOMER" | translate }}
     %tbody
-      %tr(ng-repeat="appointment in appointments")
+      %tr(ng-repeat="appointment in appointmentsCollection")
         %td.id {{ appointment.id }}
         %td.date {{ appointment.date }}
         %td.start-time {{ appointment.start_time }}

@@ -4,15 +4,15 @@
   %button#add-employee.btn.btn-primary(data-target="#add-employee-form" data-toggle="modal" type="button")
     {{ "USER.ADD_AN_EMPLOYEE" | translate }}
 
-  %table#employees-table.table.table-striped(st-table="employees")
+  %table#employees-table.table.table-striped(st-table="employeesCollection" st-safe-src="employees")
     %thead
       %tr
         %th.id id
-        %th.first-name {{ "USER.FIRST_NAME" | translate }}
-        %th.last-name {{ "USER.LAST_NAME" | translate }}
+        %th.first-name(st-sort="first_name") {{ "USER.FIRST_NAME" | translate }}
+        %th.last-name(st-sort="last_name") {{ "USER.LAST_NAME" | translate }}
         %th.email {{ "USER.EMAIL" | translate }}
     %tbody
-      %tr(ng-repeat="employee in employees")
+      %tr(ng-repeat="employee in employeesCollection")
         %td.id {{ employee.id }}
         %td.first-name {{ employee.first_name }}
         %td.last-name {{ employee.last_name }}
