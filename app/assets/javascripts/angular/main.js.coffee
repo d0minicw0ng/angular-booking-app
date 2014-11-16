@@ -5,7 +5,9 @@
   "pascalprecht.translate"
   "templates"
   "ng-rails-csrf"
+  "localytics.directives"
 ])
+
 
 @Guru.config ($authProvider) ->
   # TODO: The apiUrl should depend on the environment.

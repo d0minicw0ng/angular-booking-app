@@ -2,9 +2,10 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree ../../../vendor/assets/bower_components/angular
+//= require angular-rails-templates
+//= require_tree ../../../vendor/assets/bower_components/chosen
 //= require ng-rails-csrf
 //= require_tree ../../../vendor/assets/bower_components/
-//= require angular-rails-templates
 
 //= require ./angular/main
 //= require ./angular/router

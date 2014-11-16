@@ -7,3 +7,8 @@
 }
 
 #dashboard-wrapper { margin-top: 35px; }
+
+// NOTE: Fix to chosen returning 0px width when the selector
+// is not visible in the first place. It's not pretty, but it
+// solves the issue.
+.chosen-container { min-width: 220px !important; }
