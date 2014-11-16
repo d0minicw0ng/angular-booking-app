@@ -18,6 +18,8 @@
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/picker.time
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/directives
 //= require ../../../vendor/assets/bower_components/angular-smart-table/dist/smart-table.min
+//= require ../../../vendor/assets/bower_components/moment/min/moment.min
+//= require ../../../vendor/assets/bower_components/angular-moment/angular-moment.min
 
 //= require ./angular/main
 //= require ./angular/router

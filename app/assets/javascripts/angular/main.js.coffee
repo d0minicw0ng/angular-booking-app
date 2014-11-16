@@ -8,6 +8,7 @@
   "localytics.directives"
   "angular-datepicker"
   "smart-table"
+  "angularMoment"
 ])
 
 

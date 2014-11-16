@@ -14,7 +14,8 @@
       "flag-icon-css"             : "latest",
       "angular-chosen-localytics" : "latest",
       "angular-native-picker"     : "latest",
-      "angular-smart-table"       : "latest"
+      "angular-smart-table"       : "latest",
+      "angular-moment"            : "latest"
     }
   }
 }
