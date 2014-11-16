@@ -10,7 +10,7 @@
   _generateRandomPassword: ->
     Math.random().toString(36).substring 2,10
 
-  getEmployees: (scope) ->
+  getEmployees: ->
     $http(url: "/api/v1/users", method: "GET")
       .then (data, status, headers, config) ->
         data.data
