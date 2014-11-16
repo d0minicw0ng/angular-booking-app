@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   include DeviseTokenAuth::Concerns::User
   # TODO: validates_presence_of :name OR (:first_name and :last_name)?
   # TODO: This does not apply to customers!
