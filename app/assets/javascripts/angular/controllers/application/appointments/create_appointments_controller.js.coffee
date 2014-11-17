@@ -34,10 +34,10 @@
     $scope.pickATimeOptions = {}
 
     $scope.addAppointment = ->
-      AppointmentsService.createAppointment($scope.appointment).then (resp) ->
+      AppointmentsService.createAppointment($scope.appointment).then (appointment) ->
         $("#add-appointment-form").modal "hide"
         $scope.appointment = {}
-        $scope.$emit "appointment-created", resp.data
+        $scope.$emit "appointment-created", appointment
       .catch (err) ->
         console.log err
 
