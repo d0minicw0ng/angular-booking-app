@@ -37,7 +37,7 @@
       AppointmentsService.createAppointment($scope.appointment).then (resp) ->
         $("#add-appointment-form").modal "hide"
         $scope.appointment = {}
-        $scope.$emit "appointment-created", resp.data.data
+        $scope.$emit "appointment-created", resp.data
       .catch (err) ->
         console.log err
 

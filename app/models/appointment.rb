@@ -16,16 +16,14 @@ class Appointment < ActiveRecord::Base
   private
 
   def masseur_does_not_have_conflicting_appointments
-    if Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id).count > 0 ||
-       Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id).count > 0
-      errors.add_to_base "There is an appointment conflict."
+    if Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id).count > 0
+      errors.add :masseur_id, "There is an appointment conflict."
     end
   end
 
   def customer_does_not_have_conflicting_appointments
-    if Appointment.where(start_time: start_time..end_time, customer_id: customer_id).count > 0 ||
-       Appointment.where(start_time: start_time..end_time, customer_id: customer_id).count > 0
-      errors.add_to_base "There is an appointment conflict."
+    if Appointment.where(start_time: start_time..end_time, customer_id: customer_id).count > 0
+      errors.add :customer_id, "There is an appointment conflict."
     end
   end
 

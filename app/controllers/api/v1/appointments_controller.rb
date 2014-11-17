@@ -5,7 +5,7 @@ class Api::V1::AppointmentsController < ApplicationController
   def index
     appointments = Appointment
       .joins(:masseur)
-      .where "user.company_id = ?", @current_user.company_id
+      .where "users.company_id = ?", @current_user.company_id
 
     render json: appointments.as_json, status: :ok
   end
