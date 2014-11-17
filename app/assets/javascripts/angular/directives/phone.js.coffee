@@ -9,6 +9,7 @@
       ngModel.$setViewValue inputValue
 
     element.intlTelInput
+      utilsScript: "../../../intl-tel-input/lib/libphonenumber/build/utils"
       defaultCountry: "id"
       preferredCountries: "id"
       onlyCountries: ["id", "my", "cn", "ph", "tl", "vn", "th"]
