@@ -14,4 +14,7 @@
           .form-group
             %label {{ "USER.LAST_NAME" | translate }}
             %input.form-control(name="last_name" ng-model="registrationForm.last_name" required="required" type="text")
+          .form-group
+            %label {{ "USER.MOBILE_PHONE_NUMBER" | translate }}
+            %phone#mobile-phone-number(name="mobile_phone_number" ng-model="registrationForm.mobile_phone_number")
           %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}

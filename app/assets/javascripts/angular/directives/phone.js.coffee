@@ -12,7 +12,7 @@
       utilsScript: "../../../intl-tel-input/lib/libphonenumber/build/utils"
       defaultCountry: "id"
       preferredCountries: "id"
-      onlyCountries: ["id", "my", "cn", "ph", "tl", "vn", "th"]
+      onlyCountries: ["id", "my", "cn", "ph", "tl", "vn", "th", "sg"]
     element.on "focus blur keyup change", ->
       scope.$apply read
 

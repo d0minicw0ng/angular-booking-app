@@ -7,7 +7,7 @@
     USER:
       FIRST_NAME: "First Name"
       LAST_NAME: "Last Name"
-      CELL_NUMBER: "Cell Number"
+      MOBILE_PHONE_NUMBER: "Mobile Phone Number"
       NAME: "Name"
       EMAIL: "Email"
       PASSWORD: "Password"
@@ -16,6 +16,7 @@
       ADD_A_CUSTOMER: "Add a customer"
       ROLE: "Role"
       SELECT_A_ROLE: "Select A Role"
+      INVALID_DATA: "The user data is invalid"
     APPOINTMENT:
       DATE: "Date"
       START_TIME: "Start Time"

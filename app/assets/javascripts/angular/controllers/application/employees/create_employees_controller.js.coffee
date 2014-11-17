@@ -14,7 +14,7 @@
         $scope.alertSuccess "SESSION.EMPLOYEE_ADDED"
         $scope.$emit "employee-created", resp.data.data
       .catch (err) ->
-        console.log err
+        $scope.alertDanger "USER.INVALID_DATA"
 
   ]
 

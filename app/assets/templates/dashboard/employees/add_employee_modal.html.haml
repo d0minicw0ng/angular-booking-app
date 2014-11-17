@@ -15,8 +15,8 @@
             %label {{ "USER.LAST_NAME" | translate }}
             %input.form-control(name="last_name" ng-model="registrationForm.last_name" required="required" type="text")
           .form-group
-            %label {{ "USER.CELL_NUMBER" | translate }}
-            %phone#cell-number(name="cell_number" ng-model="registrationForm.cell_number")
+            %label {{ "USER.MOBILE_PHONE_NUMBER" | translate }}
+            %phone#mobile-phone-number(name="mobile_phone_number" ng-model="registrationForm.mobile_phone_number")
           .form-group
             %label {{ "USER.ROLE" | translate }}
             %select.form-control(name="role" ng-model="registrationForm.role" ng-options="role for role in roles" required="required" type="text")

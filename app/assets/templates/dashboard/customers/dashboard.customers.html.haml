@@ -11,9 +11,11 @@
         %th.first-name.sortable(st-sort="first_name") {{ "USER.FIRST_NAME" | translate }}
         %th.last-name.sortable(st-sort="last_name") {{ "USER.LAST_NAME" | translate }}
         %th.email.sortable(st-sort="email") {{ "USER.EMAIL" | translate }}
+        %th.mobile-phone-number {{ "USER.MOBILE_PHONE_NUMBER" | translate }}
     %tbody
       %tr(ng-repeat="customer in customersCollection")
         %td.id {{ customer.id }}
         %td.first-name {{ customer.first_name }}
         %td.last-name {{ customer.last_name }}
         %td.email {{ customer.email }}
+        %td.mobile-phone-number {{ customer.mobile_phone_number_formatted }}

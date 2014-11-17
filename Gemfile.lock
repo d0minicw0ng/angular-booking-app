@@ -55,6 +55,9 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    countries (0.9.3)
+      currencies (~> 0.4.2)
+    currencies (0.4.2)
     debugger-linecache (1.2.0)
     devise (3.4.1)
       bcrypt (~> 3.0)
@@ -90,6 +93,11 @@ GEM
       rack (~> 1.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
+    phony (2.7.1)
+    phony_rails (0.8.0)
+      activesupport (>= 3.0)
+      countries (>= 0.8.2)
+      phony (~> 2.7.1)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -181,6 +189,7 @@ DEPENDENCIES
   ng-rails-csrf
   omniauth
   pg
+  phony_rails
   rails (= 4.1.4)
   rspec-rails
   sass-rails (~> 4.0.3)
