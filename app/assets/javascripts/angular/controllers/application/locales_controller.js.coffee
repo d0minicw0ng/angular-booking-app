@@ -2,5 +2,6 @@
 
   $scope.changeLocale = (lang) ->
     $translate.use lang
+    moment.locale lang
 
 ]

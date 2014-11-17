@@ -19,6 +19,9 @@
 //= require ../../../vendor/assets/bower_components/angular-native-picker/src/directives
 //= require ../../../vendor/assets/bower_components/angular-smart-table/dist/smart-table.min
 //= require ../../../vendor/assets/bower_components/moment/min/moment.min
+//= require ../../../vendor/assets/bower_components/moment/locale/id
+//= require ../../../vendor/assets/bower_components/moment/locale/zh-cn
+//= require ../../../vendor/assets/bower_components/moment/locale/zh-tw
 //= require ../../../vendor/assets/bower_components/angular-moment/angular-moment.min
 
 //= require ./angular/main
