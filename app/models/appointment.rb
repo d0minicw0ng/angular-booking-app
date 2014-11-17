@@ -34,4 +34,20 @@ class Appointment < ActiveRecord::Base
   def start_time_before_end_time
     errors.add :start_time, "can't be after end time." if start_time > end_time
   end
+
+  def serializable_hash options
+    options ||= {
+      include: {
+        masseur: {
+          only: [:id],
+          methods: [:name]
+        },
+        customer: {
+          only: [:id],
+          methods: [:name]
+        }
+      }
+    }
+    super options
+  end
 end

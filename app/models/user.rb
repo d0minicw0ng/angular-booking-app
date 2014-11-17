@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
   validates_inclusion_of :role, in: %w(admin manager staff customer)
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   # TODO: more attributes
   # address
   # department / type
@@ -14,11 +18,10 @@ class User < ActiveRecord::Base
   # photo
   # pay rate
   # maybe start date/ hire date?
-  private
 
   def serializable_hash options
     # NOTE: devise overrides serializable_hash and we have
     # merge whatever we want in the JSON object.
-    super(options).merge(name: "#{first_name} #{last_name}")
+    super(options).merge(name: name)
   end
 end
