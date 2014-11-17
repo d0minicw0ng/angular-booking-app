@@ -6,6 +6,21 @@
 %button.btn.btn-primary{"data-target" => "#signup-form", "data-toggle" => "modal", type: "button"}
   {{ "SESSION.SIGNUP" | translate }}
 
-%span(ng-controller="LocaleController")
-  %h3.flag-icon.background.flag-icon.squared.flag-icon-us(ng-click="changeLocale('en')" href="#")
-  %h3.flag-icon.background.flag-icon.squared.flag-icon-id(ng-click="changeLocale('id')" href="#")
+.dropdown
+  %button#language-dropdown.btn.btn-default.dropdown-toggle(aria-expanded=true data-toggle="dropdown" type="button")
+    {{ "LANGUAGE" | translate }}
+    %span.caret
+
+  %ul#locales.dropdown-menu(aria-labelledby="language-dropdown" role="menu" ng-controller="LocaleController")
+    %li(role="presentation" ng-click="changeLocale('en')")
+      %h6.flag-icon.background.flag-icon.squared.flag-icon-us
+      %span.language English
+    %li(role="presentation" ng-click="changeLocale('id')")
+      %h6.flag-icon.background.flag-icon.squared.flag-icon-id
+      %span.language Bahasa Indonesia
+    %li(role="presentation" ng-click="changeLocale('zh_CN')")
+      %h6.flag-icon.background.flag-icon.squared.flag-icon-cn
+      %span.language 简体中文
+    %li(role="presentation" ng-click="changeLocale('zh_TW')")
+      %h6.flag-icon.background.flag-icon.squared.flag-icon-tw
+      %span.language 繁體中文
