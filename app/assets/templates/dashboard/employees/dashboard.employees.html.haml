@@ -8,8 +8,8 @@
     %thead
       %tr
         %th.id id
-        %th.first-name(st-sort="first_name") {{ "USER.FIRST_NAME" | translate }}
-        %th.last-name(st-sort="last_name") {{ "USER.LAST_NAME" | translate }}
+        %th.first-name.sortable(st-sort="first_name") {{ "USER.FIRST_NAME" | translate }}
+        %th.last-name.sortable(st-sort="last_name") {{ "USER.LAST_NAME" | translate }}
         %th.email {{ "USER.EMAIL" | translate }}
     %tbody
       %tr(ng-repeat="employee in employeesCollection")
