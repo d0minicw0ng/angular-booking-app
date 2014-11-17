@@ -1,6 +1,7 @@
 @Guru.config ($translateProvider) ->
 
   $translateProvider.translations "en",
+    ERROR: "Sorry, an error occurred."
     LANGUAGE: "Language"
     ADD: "Add"
     USER:
@@ -32,6 +33,7 @@
       EMAIL_CONFIRMED: "Your email has been confirmed."
       EMPLOYEE_ADDED: "You have successfully added an employee."
       CUSTOMER_ADDED: "You have successfully added a customer."
+      INVALID_CREDENTIALS: "Your username/password combination is incorrect."
     DASHBOARD:
       MANAGE_YOUR_APPOINTMENTS: "Manage your appointments"
       MANAGE_YOUR_CUSTOMERS: "Manage your customers"

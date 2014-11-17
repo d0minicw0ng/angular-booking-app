@@ -26,4 +26,14 @@
           $(".alert-success").empty()
           $(".alert-success").hide()
         , 2000
+
+    $scope.alertDanger = (dangerMessage) ->
+      $translate(dangerMessage).then (translation) ->
+        $scope.dangerMessage = translation
+        setTimeout ->
+          # TODO: what is the proper way to do this?
+          $scope.dangerMessage = undefined
+          $(".alert-danger").empty()
+          $(".alert-danger").hide()
+        , 2000
   ]

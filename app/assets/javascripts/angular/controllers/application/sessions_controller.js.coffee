@@ -23,6 +23,7 @@
 
         .catch (err) ->
           console.log err
+          $scope.alertDanger("ERROR")
 
     $scope.private =
       _getUsersCompanyName: ->
@@ -40,7 +41,8 @@
           $state.go "dashboard.appointments"
           $scope.alertSuccess "SESSION.SIGNIN_SUCCESS"
         , 250
-      .catch (err) -> console.log err
+      .catch (err) ->
+        $scope.alertDanger("SESSION.INVALID_CREDENTIALS")
 
     $scope.signOut = ->
       $auth.signOut()
@@ -49,6 +51,7 @@
           $scope.alertSuccess "SESSION.SIGNOUT_SUCCESS"
         .catch (err) ->
           console.log err
+          $scope.alertDanger("ERROR")
 
     $scope.$on 'auth:email-confirmation-success', (ev, user) ->
       $scope.setCurrentUser user
