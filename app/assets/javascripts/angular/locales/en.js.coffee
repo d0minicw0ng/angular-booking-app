@@ -13,6 +13,8 @@
       PASSWORD_CONFIRMATION: "Password Confirmation"
       ADD_AN_EMPLOYEE: "Add an employee"
       ADD_A_CUSTOMER: "Add a customer"
+      ROLE: "Role"
+      SELECT_A_ROLE: "Select A Role"
     APPOINTMENT:
       DATE: "Date"
       START_TIME: "Start Time"

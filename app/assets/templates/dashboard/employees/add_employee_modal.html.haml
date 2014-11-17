@@ -14,5 +14,8 @@
           .form-group
             %label {{ "USER.LAST_NAME" | translate }}
             %input.form-control(name="last_name" ng-model="registrationForm.last_name" required="required" type="text")
+          .form-group
+            %label {{ "USER.ROLE" | translate }}
+            %select.form-control(name="role" ng-model="registrationForm.role" ng-options="role for role in roles" required="required" type="text")
+              %option(value="") {{ "USER.SELECT_A_ROLE" | translate }}
           %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}
-          //TODO: A bunch of things to be added later.

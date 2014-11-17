@@ -4,6 +4,8 @@
   "EmployeesService"
   ($scope, $auth, EmployeesService) ->
 
+    $scope.roles = ["admin", "manager", "staff"]
+
     $scope.submitRegistration = ->
       $scope.registrationForm.company_id = $scope.currentUser().company_id
       EmployeesService.createEmployee($scope.registrationForm).then (resp) ->
