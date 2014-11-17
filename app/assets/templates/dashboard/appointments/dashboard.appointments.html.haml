@@ -8,11 +8,11 @@
     %thead
       %tr
         %th.id id
-        %th.date {{ "APPOINTMENT.DATE" | translate }}
+        %th.date(st-sort="date") {{ "APPOINTMENT.DATE" | translate }}
         %th.start-time {{ "APPOINTMENT.START_TIME" | translate }}
         %th.end-time {{ "APPOINTMENT.END_TIME" | translate }}
-        %th.masseur {{ "APPOINTMENT.MASSEUR" | translate }}
-        %th.customer {{ "APPOINTMENT.CUSTOMER" | translate }}
+        %th.masseur(st-sort="masseur.name") {{ "APPOINTMENT.MASSEUR" | translate }}
+        %th.customer(st-sort="customer.name") {{ "APPOINTMENT.CUSTOMER" | translate }}
     %tbody
       %tr(ng-repeat="appointment in appointmentsCollection")
         %td.id {{ appointment.id }}
