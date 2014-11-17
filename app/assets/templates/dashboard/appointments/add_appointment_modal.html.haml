@@ -10,7 +10,7 @@
             %input#date.form-control(name="date" ng-model="appointment.date" required="required" type="text" pick-a-date="date" pick-a-date-options="pickADateOptions")
           .form-group
             %label {{ "APPOINTMENT.START_TIME" | translate }}
-            %input#start-time.form-control(name="start_time" ng-model="appointment.start_time" required="required" type="text" pick-a-time="time" pick-a-time-options="pickATimeOptions")
+            %input#start-time.form-control(name="time" ng-model="appointment.time" required="required" type="text" pick-a-time="time" pick-a-time-options="pickATimeOptions")
           .form-group
             %label {{ "APPOINTMENT.DURATION" | translate }}
             %select#duration.form-control(name="duration" ng-model="appointment.duration" ng-options="duration.value as duration.text for duration in durations" required="required" chosen)

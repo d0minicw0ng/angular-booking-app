@@ -2,11 +2,9 @@
 
   createAppointment: (appointment) ->
     self = @
-    startTime = moment("#{appointment.date} #{appointment.start_time}")
+    startTime = moment("#{appointment.date} #{appointment.time}")
     appointment.start_time = startTime.format()
     appointment.end_time = startTime.add(appointment.duration, "hours").format()
-    delete appointment.duration
-    delete appointment.date
     $http.post("/api/v1/appointments", { appointment: appointment }).then (resp) ->
       self._setFormattedDateTime resp.data
 

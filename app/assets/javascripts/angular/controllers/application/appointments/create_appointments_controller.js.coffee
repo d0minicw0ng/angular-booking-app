@@ -39,7 +39,11 @@
         $scope.appointment = {}
         $scope.$emit "appointment-created", appointment
       .catch (err) ->
-        console.log err
+        errors = err.data.errors
+        if errors.masseur_id
+          $scope.alertDanger("APPOINTMENT.MASSEUR_CONFLICT")
+        else if errors.customer_id
+          $scope.alertDanger("APPOINTMENT.CUSTOMER_CONFLICT")
 
   ]
 

@@ -8,7 +8,8 @@ class Api::V1::CompaniesController < ApplicationController
       company.save
       employee.update_attributes company_id: company.id
     end
-    render json: company.as_json, status: :ok
+    # TODO: Will it fail if it's not valid? Refer to appointments_controller
+    render json: company.as_json
   end
 
   private

@@ -21,6 +21,8 @@
       MASSEUR: "Masseur"
       CUSTOMER: "Customer"
       ADD_AN_APPOINTMENT: "Add an appointment"
+      MASSEUR_CONFLICT: "This masseur already has an appointment in this time period."
+      CUSTOMER_CONFLICT: "This customer already has an appointment in this time period."
     COMPANY:
       NAME_OF_YOUR_COMPANY: "Your Company's Name"
     SESSION:
