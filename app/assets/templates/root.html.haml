@@ -1,9 +1,9 @@
 %ng-include(src="'sessions/signin_modal.html'")
 %ng-include(src="'sessions/signup_modal.html'")
 
-%button.btn.btn-primary{"data-target" => "#login-form", "data-toggle" => "modal", type: "button"}
+%button.btn.btn-primary(data-target="#login-form" data-toggle="modal" type="button")
   {{ "SESSION.SIGNIN" | translate }}
-%button.btn.btn-primary{"data-target" => "#signup-form", "data-toggle" => "modal", type: "button"}
+%button.btn.btn-primary(data-target="#signup-form" data-toggle="modal" type="button")
   {{ "SESSION.SIGNUP" | translate }}
 
 %locales-dropdown
