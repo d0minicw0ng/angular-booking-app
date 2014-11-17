@@ -15,7 +15,10 @@
       "angular-chosen-localytics" : "latest",
       "angular-native-picker"     : "latest",
       "angular-smart-table"       : "latest",
-      "angular-moment"            : "latest"
+      "angular-moment"            : "latest",
+      //TODO: intl-tel-input installs jQuery,
+      //resolve duplication
+      "intl-tel-input"            : "latest"
     }
   }
 }

@@ -23,6 +23,7 @@
 //= require ../../../vendor/assets/bower_components/moment/locale/zh-cn
 //= require ../../../vendor/assets/bower_components/moment/locale/zh-tw
 //= require ../../../vendor/assets/bower_components/angular-moment/angular-moment.min
+//= require ../../../vendor/assets/bower_components/intl-tel-input/build/js/intlTelInput.min
 
 //= require ./angular/main
 //= require ./angular/router

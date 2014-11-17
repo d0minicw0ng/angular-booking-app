@@ -7,6 +7,7 @@
     USER:
       FIRST_NAME: "First Name"
       LAST_NAME: "Last Name"
+      CELL_NUMBER: "Cell Number"
       NAME: "Name"
       EMAIL: "Email"
       PASSWORD: "Password"

@@ -42,3 +42,16 @@
 }
 
 th.sortable { cursor: pointer }
+
+.intl-tel-input {
+  display: block !important; // Unfortunately
+  ul.country-list {
+    li {
+      list-style: none;
+    }
+    li.country {
+      margin-bottom: 0px;
+      margin-left: 0px;
+    }
+  }
+}
