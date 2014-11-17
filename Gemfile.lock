@@ -1,8 +1,8 @@
 GIT
-  remote: git@github.com:lynndylanhurley/devise_token_auth.git
-  revision: 8fc49a5485a4819674e377b099b36c8d9b3ae0c9
+  remote: https://github.com/lynndylanhurley/devise_token_auth.git
+  revision: 49bf5a06bf4c757b06347d3bab7df83e910a58b7
   specs:
-    devise_token_auth (0.1.30.beta5)
+    devise_token_auth (0.1.30.beta6)
       devise (~> 3.3)
       rails (~> 4.1)
 
@@ -112,6 +112,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.4)
       sprockets-rails (~> 2.0)
+    rails_12factor (0.0.2)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (4.1.4)
       actionpack (= 4.1.4)
       activesupport (= 4.1.4)
@@ -191,6 +196,7 @@ DEPENDENCIES
   pg
   phony_rails
   rails (= 4.1.4)
+  rails_12factor
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

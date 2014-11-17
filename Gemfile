@@ -3,7 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.4'
 gem 'pg'
 gem "twitter-bootstrap-rails"
+
 # gem 'therubyracer',  platforms: :ruby
+
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -27,9 +29,11 @@ gem 'byebug', group: [:development, :test]
 gem 'angular-rails-templates'
 gem 'bower-rails'
 
-gem 'devise_token_auth', git: "git@github.com:lynndylanhurley/devise_token_auth.git"
+gem 'devise_token_auth', git: "https://github.com/lynndylanhurley/devise_token_auth.git"
 gem 'omniauth'
 gem 'phony_rails'
 
 gem 'rspec-rails'
 gem 'ng-rails-csrf'
+
+gem 'rails_12factor', group: :production
