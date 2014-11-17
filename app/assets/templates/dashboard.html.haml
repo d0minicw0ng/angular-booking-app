@@ -14,8 +14,8 @@
   #page-content-wrapper
     #navigations.pull-right
       %a#menu-toggle.btn.btn-default(href="#menu-toggle") Toggle Menu
-      %button.btn.btn-danger#sign-out(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
       %locales-dropdown
+      %button.btn.btn-danger#sign-out(ng-controller="SessionsController" ng-if="currentUser" ng-click="signOut()") {{ "SESSION.SIGNOUT" | translate }}
     #dashboard-wrapper.container-fluid
       .row
         #dashboard.col-lg-12(ui-view)
