@@ -1,0 +1,17 @@
+%div(ng-controller="CalendarController")
+
+  %ng-include(src="'dashboard/appointments/add_appointment_modal.html'")
+  %button#add-appointment.btn.btn-primary(data-target="#add-appointment-form" data-toggle="modal" type="button")
+    {{ "APPOINTMENT.ADD_AN_APPOINTMENT" | translate }}
+  %button.btn.btn-primary(ui-sref="dashboard.appointments" type="button") {{ "APPOINTMENT.TABLE" | translate }}
+
+  //TODO: use icons
+  .row#zoom-buttons-container
+    .col-lg-7
+    .col-lg-5
+      .input-group
+        %input#calendar-date.form-control(type="text" pick-a-date="date" pick-a-date-options="pickADateOptions" placeholder="Select A Date")
+        %span.input-group-btn
+          %button.btn.btn-success.zoom-in(ng-click="zoom(-0.2)") {{ "CALENDAR.ZOOM_IN" | translate }}
+          %button.btn.btn-danger.zoom-out(ng-click="zoom(0.2)") {{ "CALENDAR.ZOOM_OUT" | translate }}
+  .row#appointments-calendar

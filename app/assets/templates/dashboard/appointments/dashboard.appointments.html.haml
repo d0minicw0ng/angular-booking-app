@@ -3,6 +3,7 @@
   %ng-include(src="'dashboard/appointments/add_appointment_modal.html'")
   %button#add-appointment.btn.btn-primary(data-target="#add-appointment-form" data-toggle="modal" type="button")
     {{ "APPOINTMENT.ADD_AN_APPOINTMENT" | translate }}
+  %button.btn.btn-primary(ui-sref="dashboard.calendar" type="button") {{ "APPOINTMENT.CALENDAR" | translate }}
 
   %table#appointments-table.table.table-striped(st-table="appointmentsCollection" st-safe-src="appointments")
     %thead

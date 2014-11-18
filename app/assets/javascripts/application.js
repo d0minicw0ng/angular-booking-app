@@ -25,6 +25,8 @@
 //= require ../../../vendor/assets/bower_components/angular-moment/angular-moment.min
 //= require ../../../vendor/assets/bower_components/intl-tel-input/build/js/intlTelInput.min
 //= require ../../../vendor/assets/bower_components/intl-tel-input/lib/libphonenumber/build/utils
+//= require ../../../vendor/assets/bower_components/vis/dist/vis.min
+//= require ../../../vendor/assets/bower_components/lodash/dist/lodash.min
 
 //= require ./angular/main
 //= require ./angular/router

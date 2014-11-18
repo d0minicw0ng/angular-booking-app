@@ -17,7 +17,10 @@
       "angular-moment"            : "latest",
       //TODO: intl-tel-input installs jQuery,
       //resolve duplication
-      "intl-tel-input"            : "latest"
+      "intl-tel-input"            : "latest",
+      "vis"                       : "latest",
+      "lodash"                    : "latest"
+
     }
   }
 }

@@ -27,6 +27,13 @@
       ADD_AN_APPOINTMENT: "Add an appointment"
       MASSEUR_CONFLICT: "This masseur already has an appointment in this time period."
       CUSTOMER_CONFLICT: "This customer already has an appointment in this time period."
+      CALENDAR: "Calendar View"
+      TABLE: "Table View"
+      START_TIME_BEFORE_CURRENT_TIME: "Appointment start time can't be before current time."
+      END_TIME_BEFORE_START_TIME: "Appointment end time can't be before appointment start time."
+    CALENDAR:
+      ZOOM_IN: "Zoom In"
+      ZOOM_OUT: "Zoom Out"
     COMPANY:
       NAME_OF_YOUR_COMPANY: "Your Company's Name"
     SESSION:

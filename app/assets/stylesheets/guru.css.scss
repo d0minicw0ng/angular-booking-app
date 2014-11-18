@@ -41,8 +41,10 @@
   }
 }
 
+// sortable table
 th.sortable { cursor: pointer }
 
+// phone number input
 .intl-tel-input {
   display: block !important; // Unfortunately
   ul.country-list {
@@ -54,4 +56,19 @@ th.sortable { cursor: pointer }
       margin-left: 0px;
     }
   }
+}
+
+// Calendar
+#zoom-buttons-container,
+#appointments-calendar {
+  margin-top: 15px;
+}
+
+input#calendar-date {
+  background-color: #FFFFFF;
+}
+
+.inner,
+.text.major {
+  font-weight: 700;
 }

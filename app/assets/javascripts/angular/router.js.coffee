@@ -33,5 +33,13 @@
         auth: ($auth) ->
           $auth.validateUser()
 
+    .state "dashboard.calendar",
+      url: "/calendar"
+      templateUrl: "dashboard/appointments/dashboard.calendar.html"
+      resolve:
+        auth: ($auth) ->
+          $auth.validateUser()
+
+
   $urlRouterProvider.otherwise "/"
   $locationProvider.html5Mode true
