@@ -1,7 +1,8 @@
 @Guru.controller "CalendarController", [
   "$scope"
   "CalendarService"
-  ($scope, CalendarService) ->
+  "AppointmentsService"
+  ($scope, CalendarService, AppointmentsService) ->
 
     $scope.timeline = null
 
@@ -21,6 +22,12 @@
           orientation: "top"
           zoomMin: 12500000
           zoomMax: 604800000
+          editable:
+            remove: true
+          onRemove: (data, callback) ->
+            AppointmentsService.destroyAppointment(data.id).then ->
+              callback data
+              $scope.alertSuccess "APPOINTMENT.REMOVED"
 
         $scope.timeline = new vis.Timeline(
           document.getElementById("appointments-calendar"),

@@ -13,7 +13,7 @@
             content   : appointment.customer.name
             group     : appointment.masseur.id
             className : "appointment-calendar-time"
-            type      : "background"
+            type      : "range"
           }
 
         groupedAppointments = _.groupBy appointments, (appointment) ->

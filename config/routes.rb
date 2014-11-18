@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :companies, only: [:create]
       get "employees", to: "users#employees"
       get "customers", to: "users#customers"
-      resources :appointments, only: [:create, :index]
+      resources :appointments, only: [:create, :index, :destroy]
     end
   end
 

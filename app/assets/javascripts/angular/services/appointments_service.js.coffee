@@ -8,6 +8,9 @@
     $http.post("/api/v1/appointments", { appointment: appointment }).then (resp) ->
       self._setFormattedDateTime resp.data
 
+  destroyAppointment: (id) ->
+    $http.delete("/api/v1/appointments/#{id}")
+
   getAppointments: ->
     self = @
     $http(url: "/api/v1/appointments", method: "GET")
