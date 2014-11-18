@@ -6,7 +6,8 @@ class Api::V1::CompaniesController < ApplicationController
     employee = User.find params[:company][:employee_id]
     ActiveRecord::Base.transaction do
       company.save
-      employee.update_attributes company_id: company.id
+      employee.company_id = company.id
+      employee.save
     end
     # TODO: Will it fail if it's not valid? Refer to appointments_controller
     render json: company.as_json
