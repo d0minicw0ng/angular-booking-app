@@ -22,12 +22,21 @@
           orientation: "top"
           zoomMin: 12500000
           zoomMax: 604800000
+          selectable: true
           editable:
             remove: true
+            updateTime: true
           onRemove: (data, callback) ->
             AppointmentsService.destroyAppointment(data.id).then ->
               callback data
               $scope.alertSuccess "APPOINTMENT.REMOVED"
+          onMove: (data, callback) ->
+            AppointmentsService.updateAppointment(data).then ->
+              callback data
+              $scope.alertSuccess "APPOINTMENT.UPDATED"
+            .catch (err) ->
+              console.log err
+              $scope.alertDanger "ERROR"
 
         $scope.timeline = new vis.Timeline(
           document.getElementById("appointments-calendar"),

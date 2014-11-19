@@ -8,6 +8,13 @@
     $http.post("/api/v1/appointments", { appointment: appointment }).then (resp) ->
       self._setFormattedDateTime resp.data
 
+  updateAppointment: (appointment) ->
+    $http.put("/api/v1/appointments/#{appointment.id}", {
+      appointment:
+        start_time: moment(appointment.start).format()
+        end_time: moment(appointment.end).format()
+    })
+
   destroyAppointment: (id) ->
     $http.delete("/api/v1/appointments/#{id}")
 

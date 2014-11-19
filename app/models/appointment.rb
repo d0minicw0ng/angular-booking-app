@@ -15,6 +15,8 @@ class Appointment < ActiveRecord::Base
 
   private
 
+  # TODO: if the appointment has already been created, can't validate against itself (it will fail
+  # when the new appointment time and old appointment time overlap)
   def masseur_does_not_have_conflicting_appointments
     if Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id).count > 0 ||
        Appointment.where(end_time: start_time..end_time, masseur_id: masseur_id).count > 0
@@ -22,6 +24,8 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  # TODO: if the appointment has already been created, can't validate against itself (it will fail
+  # when the new appointment time and old appointment time overlap)
   def customer_does_not_have_conflicting_appointments
     if Appointment.where(start_time: start_time..end_time, customer_id: customer_id).count > 0 ||
        Appointment.where(end_time: start_time..end_time, customer_id: customer_id).count > 0

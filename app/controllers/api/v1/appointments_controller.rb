@@ -20,6 +20,17 @@ class Api::V1::AppointmentsController < ApplicationController
     end
   end
 
+  def update
+    appointment = Appointment.find params[:id]
+
+    if appointment.update_attributes appointment_params
+      render json: appointment.as_json, status: :ok
+    else
+      render json: { errors: appointment.errors.as_json }, status: :unprocessable_entity
+    end
+
+  end
+
   def destroy
     appointment = Appointment.find params[:id]
     appointment.destroy

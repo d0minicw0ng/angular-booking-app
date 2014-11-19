@@ -38,6 +38,7 @@
       START_TIME_BEFORE_CURRENT_TIME: "Appointment start time can't be before current time."
       END_TIME_BEFORE_START_TIME: "Appointment end time can't be before appointment start time."
       REMOVED: "The appointment has been removed."
+      UPDATED: "The appointment has been updated."
     CALENDAR:
       ZOOM_IN: "Zoom In"
       ZOOM_OUT: "Zoom Out"
