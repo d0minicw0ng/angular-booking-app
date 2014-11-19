@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   # TODO: Do we keep phone_number or do we not?
   phony_normalize :mobile_phone_number, default_country_code: "ID"
-  validates :mobile_phone_number, phony_plausible: true
+  validates :mobile_phone_number, phony_plausible: true, if: Proc.new { |user| user.mobile_phone_number.present? }
 
   def mobile_phone_number_formatted
     mobile_phone_number.try(:phony_formatted, { format: :international, space: "-" })
@@ -35,4 +35,5 @@ class User < ActiveRecord::Base
       mobile_phone_number_formatted: mobile_phone_number_formatted
     )
   end
+
 end

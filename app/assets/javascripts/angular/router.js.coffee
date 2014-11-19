@@ -47,5 +47,12 @@
         auth: ($auth) ->
           $auth.validateUser()
 
+    .state "dashboard.password",
+      url: "/password"
+      templateUrl: "dashboard/accounts/dashboard.password.html"
+      resolve:
+        auth: ($auth) ->
+          $auth.validateUser()
+
   $urlRouterProvider.otherwise "/"
   $locationProvider.html5Mode true

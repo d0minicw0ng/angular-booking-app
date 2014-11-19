@@ -3,8 +3,9 @@
     %h1 {{ "ACCOUNT.SUMMARY" | translate }} {{ user.name }}
 
   .row
-    #toggle-account-edit-form.pull-right
+    .pull-right
       %button.btn.btn-success(ng-click="toggleEditMode()") {{ "EDIT" | translate }}
+      %button.btn.btn-danger(ui-sref="dashboard.password") {{ "ACCOUNT.CHANGE_PASSWORD" | translate }}
 
   .row
     %form#edit-account-form(ng-submit="updateAccount()" role="form")

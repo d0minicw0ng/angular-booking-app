@@ -9,6 +9,7 @@
     ACCOUNT:
       SUMMARY: "Account Summary for "
       UPDATED: "Your account has been updated."
+      CHANGE_PASSWORD: "Change your password"
     USER:
       FIRST_NAME: "First Name"
       LAST_NAME: "Last Name"
