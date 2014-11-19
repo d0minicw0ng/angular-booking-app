@@ -1,0 +1,22 @@
+%div(ng-controller="AccountsController")
+  .page-header
+    %h1 {{ "ACCOUNT.SUMMARY" | translate }} {{ user.name }}
+
+  .row
+    #toggle-account-edit-form.pull-right
+      %button.btn.btn-success(ng-click="toggleEditMode()") {{ "EDIT" | translate }}
+
+  .row
+    %form#edit-account-form(ng-submit="updateAccount()" role="form")
+      .form-group
+        %label {{ "USER.FIRST_NAME" | translate }}
+        %input.form-control(name="first_name" ng-model="user.first_name" required="required" type="text" ng-disabled="viewOnly")
+      .form-group
+        %label {{ "USER.LAST_NAME" | translate }}
+        %input.form-control(name="last_name" ng-model="user.last_name" required="required" type="text" ng-disabled="viewOnly")
+      .form-group
+        %label {{ "USER.MOBILE_PHONE_NUMBER" | translate }}
+        %phone#mobile-phone-number(name="mobile_phone_number" ng-model="user.mobile_phone_number" ng-disabled="viewOnly")
+      %button.btn.btn-primary.btn-lg(type="submit" ng-hide="viewOnly") {{ "UPDATE" | translate }}
+
+

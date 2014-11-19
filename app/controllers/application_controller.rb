@@ -37,13 +37,20 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # TODO: not sure why only this works! devise_token_auth is full of bugs!!!
+    # devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
+
     devise_parameter_sanitizer.for(:sign_up) << :first_name
     devise_parameter_sanitizer.for(:sign_up) << :last_name
     devise_parameter_sanitizer.for(:sign_up) << :company_id
     devise_parameter_sanitizer.for(:sign_up) << :role
     devise_parameter_sanitizer.for(:sign_up) << :mobile_phone_number
-    # NOTE: might be useful later.
-    # devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
-    # devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+
+    devise_parameter_sanitizer.for(:account_update) << :first_name
+    devise_parameter_sanitizer.for(:account_update) << :last_name
+    devise_parameter_sanitizer.for(:account_update) << :email
+    devise_parameter_sanitizer.for(:account_update) << :mobile_phone_number
+    devise_parameter_sanitizer.for(:account_update) << :password
+    devise_parameter_sanitizer.for(:account_update) << :password_confirmation
+    # devise_parameter_sanitizer.for(:account_update) << :current_password
   end
 end

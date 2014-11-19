@@ -1,9 +1,14 @@
 @Guru.config ($translateProvider) ->
 
   $translateProvider.translations "en",
-    ERROR: "Sorry, an error occurred."
+    ERROR: "An error occurred, please try again."
     LANGUAGE: "Language"
     ADD: "Add"
+    UPDATE: "Update"
+    EDIT: "Edit"
+    ACCOUNT:
+      SUMMARY: "Account Summary for "
+      UPDATED: "Your account has been updated."
     USER:
       FIRST_NAME: "First Name"
       LAST_NAME: "Last Name"
@@ -52,3 +57,4 @@
       MANAGE_YOUR_APPOINTMENTS: "Manage your appointments"
       MANAGE_YOUR_CUSTOMERS: "Manage your customers"
       MANAGE_YOUR_EMPLOYEES: "Manage your employees"
+      ACCOUNT_SETTINGS: "Update Your Account"
