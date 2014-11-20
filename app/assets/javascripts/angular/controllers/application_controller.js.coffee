@@ -19,21 +19,15 @@
 
     $scope.alertSuccess = (successMessage) ->
       $translate(successMessage).then (translation) ->
-        $scope.successMessage = translation
+        $("body").prepend("<div class='alert alert-success fade in' role='alert'>#{translation}</div>")
         setTimeout ->
-          # TODO: what is the proper way to do this?
-          $scope.successMessage = undefined
-          $(".alert-success").empty()
-          $(".alert-success").hide()
+          $(".alert-success").remove()
         , 2000
 
     $scope.alertDanger = (dangerMessage) ->
       $translate(dangerMessage).then (translation) ->
-        $scope.dangerMessage = translation
+        $("body").prepend("<div class='alert alert-danger fade in' role='alert'>#{translation}</div>")
         setTimeout ->
-          # TODO: what is the proper way to do this?
-          $scope.dangerMessage = undefined
-          $(".alert-danger").empty()
-          $(".alert-danger").hide()
+          $(".alert-danger").remove()
         , 2000
   ]
