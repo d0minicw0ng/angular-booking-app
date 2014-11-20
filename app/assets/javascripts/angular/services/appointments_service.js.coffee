@@ -13,6 +13,7 @@
       appointment:
         start_time: moment(appointment.start).format()
         end_time: moment(appointment.end).format()
+        masseur_id: appointment.group
     })
 
   destroyAppointment: (id) ->

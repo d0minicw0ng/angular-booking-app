@@ -26,6 +26,7 @@
           editable:
             remove: true
             updateTime: true
+            updateGroup: true
           onRemove: (data, callback) ->
             if data.end <= moment().format()
               $scope.alertDanger "APPOINTMENT.CANNOT_CHANGE_APPOINTMENT"
@@ -33,12 +34,16 @@
               AppointmentsService.destroyAppointment(data.id).then ->
                 callback data
                 $scope.alertSuccess "APPOINTMENT.REMOVED"
+              .catch ->
+                callback null
+                $scope.alertDanger "ERROR"
           onMove: (data, callback) ->
             AppointmentsService.updateAppointment(data).then ->
               callback data
               $scope.alertSuccess "APPOINTMENT.UPDATED"
             .catch (err) ->
-              console.log err
+              # TODO: give smarter error messages based on the errors returned from the server.
+              callback null
               $scope.alertDanger "ERROR"
 
         $scope.timeline = new vis.Timeline(
