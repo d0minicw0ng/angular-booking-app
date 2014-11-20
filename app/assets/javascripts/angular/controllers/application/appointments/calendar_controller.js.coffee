@@ -27,9 +27,12 @@
             remove: true
             updateTime: true
           onRemove: (data, callback) ->
-            AppointmentsService.destroyAppointment(data.id).then ->
-              callback data
-              $scope.alertSuccess "APPOINTMENT.REMOVED"
+            if data.end <= moment().format()
+              $scope.alertDanger "APPOINTMENT.CANNOT_CHANGE_APPOINTMENT"
+            else
+              AppointmentsService.destroyAppointment(data.id).then ->
+                callback data
+                $scope.alertSuccess "APPOINTMENT.REMOVED"
           onMove: (data, callback) ->
             AppointmentsService.updateAppointment(data).then ->
               callback data

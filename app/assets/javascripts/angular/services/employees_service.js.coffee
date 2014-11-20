@@ -4,7 +4,6 @@
     randomPassword = @_generateRandomPassword()
     registrationForm.password = randomPassword
     registrationForm.password_confirmation = randomPassword
-    # TODO: add user type with select option in the form
 
     $auth.submitRegistration registrationForm
 
