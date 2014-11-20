@@ -15,20 +15,46 @@ class Appointment < ActiveRecord::Base
 
   private
 
-  # TODO: if the appointment has already been created, can't validate against itself (it will fail
-  # when the new appointment time and old appointment time overlap)
   def masseur_does_not_have_conflicting_appointments
-    if Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id).count > 0 ||
-       Appointment.where(end_time: start_time..end_time, masseur_id: masseur_id).count > 0
+    start_time_conflicting_appointments =
+      Appointment.where(start_time: start_time..end_time, masseur_id: masseur_id)
+    end_time_conflicting_appointments =
+     Appointment.where(end_time: start_time..end_time, masseur_id: masseur_id)
+
+    # New appointment
+    if !id && (start_time_conflicting_appointments.count > 0 || end_time_conflicting_appointments.count > 0)
+      errors.add :masseur_id, "There is an appointment conflict."
+      return
+    end
+
+    # Update appointment
+    if id.present? && (
+       start_time_conflicting_appointments.count > 1 ||
+       end_time_conflicting_appointments.count > 1 ||
+       (start_time_conflicting_appointments.count == 1 && start_time_conflicting_appointments[0].id != id) ||
+       (end_time_conflicting_appointments.count == 1 && end_time_conflicting_appointments[0].id != id))
+
       errors.add :masseur_id, "There is an appointment conflict."
     end
   end
 
-  # TODO: if the appointment has already been created, can't validate against itself (it will fail
-  # when the new appointment time and old appointment time overlap)
   def customer_does_not_have_conflicting_appointments
-    if Appointment.where(start_time: start_time..end_time, customer_id: customer_id).count > 0 ||
-       Appointment.where(end_time: start_time..end_time, customer_id: customer_id).count > 0
+    start_time_conflicting_appointments =
+      Appointment.where(start_time: start_time..end_time, customer_id: customer_id)
+    end_time_conflicting_appointments =
+     Appointment.where(end_time: start_time..end_time, customer_id: customer_id)
+
+    if !id && (start_time_conflicting_appointments.count > 0 || end_time_conflicting_appointments.count > 0)
+      errors.add :customer_id, "There is an appointment conflict."
+      return
+    end
+
+    if id.present? && (
+       start_time_conflicting_appointments.count > 1 ||
+       end_time_conflicting_appointments.count > 1 ||
+       (start_time_conflicting_appointments.count == 1 && start_time_conflicting_appointments[0].id != id) ||
+       (end_time_conflicting_appointments.count == 1 && end_time_conflicting_appointments[0].id != id))
+
       errors.add :customer_id, "There is an appointment conflict."
     end
   end
