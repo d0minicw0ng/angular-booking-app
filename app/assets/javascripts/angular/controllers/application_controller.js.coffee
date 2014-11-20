@@ -22,12 +22,12 @@
         $("body").prepend("<div class='alert alert-success fade in' role='alert'>#{translation}</div>")
         setTimeout ->
           $(".alert-success").remove()
-        , 2000
+        , 3000
 
     $scope.alertDanger = (dangerMessage) ->
       $translate(dangerMessage).then (translation) ->
         $("body").prepend("<div class='alert alert-danger fade in' role='alert'>#{translation}</div>")
         setTimeout ->
           $(".alert-danger").remove()
-        , 2000
+        , 3000
   ]

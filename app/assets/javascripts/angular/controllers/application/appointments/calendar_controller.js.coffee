@@ -29,7 +29,7 @@
             updateGroup: true
           onRemove: (data, callback) ->
             if data.end <= moment().format()
-              $scope.alertDanger "APPOINTMENT.CANNOT_CHANGE_APPOINTMENT"
+              $scope.alertDanger "APPOINTMENT.CANNOT_CHANGE_PAST_APPOINTMENT"
             else
               AppointmentsService.destroyAppointment(data.id).then ->
                 callback data
@@ -42,9 +42,16 @@
               callback data
               $scope.alertSuccess "APPOINTMENT.UPDATED"
             .catch (err) ->
-              # TODO: give smarter error messages based on the errors returned from the server.
+              if err.data.errors.masseur_id
+                $scope.alertDanger "APPOINTMENT.MASSEUR_CONFLICT"
+              else if err.data.errors.customer_id
+                $scope.alertDanger "APPOINTMENT.CUSTOMER_CONFLICT"
+              else if moment(data.end).format() < moment().format()
+                $scope.alertDanger "APPOINTMENT.BEFORE_CURRENT_TIME"
+              else
+                $scope.alertDanger "ERROR"
+
               callback null
-              $scope.alertDanger "ERROR"
 
         $scope.timeline = new vis.Timeline(
           document.getElementById("appointments-calendar"),

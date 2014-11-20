@@ -35,11 +35,11 @@
       CUSTOMER_CONFLICT: "This customer already has an appointment in this time period."
       CALENDAR: "Calendar View"
       TABLE: "Table View"
-      START_TIME_BEFORE_CURRENT_TIME: "Appointment start time can't be before current time."
+      BEFORE_CURRENT_TIME: "Appointment can't be before current time."
       END_TIME_BEFORE_START_TIME: "Appointment end time can't be before appointment start time."
       REMOVED: "The appointment has been removed."
       UPDATED: "The appointment has been updated."
-      CANNOT_CHANGE_APPOINTMENT: "You cannot make changes to an appointment from the past."
+      CANNOT_CHANGE_PAST_APPOINTMENT: "You cannot make changes to an appointment from the past."
     CALENDAR:
       ZOOM_IN: "Zoom In"
       ZOOM_OUT: "Zoom Out"

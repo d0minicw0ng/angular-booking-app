@@ -45,7 +45,7 @@
         else if errors.customer_id
           $scope.alertDanger("APPOINTMENT.CUSTOMER_CONFLICT")
         else if errors.start_time
-          $scope.alertDanger("APPOINTMENT.START_TIME_BEFORE_CURRENT_TIME")
+          $scope.alertDanger("APPOINTMENT.BEFORE_CURRENT_TIME")
         else if errors.end_time
           $scope.alertDanger("APPOINTMENT.END_TIME_BEFORE_START_TIME")
 
