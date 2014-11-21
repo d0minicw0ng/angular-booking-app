@@ -60,7 +60,6 @@
           options
         )
         $scope.setDate defaultDate
-        $scope.setWindow 1416239702159, 1416313238094
 
     $scope.zoom = (percentage) ->
       range    = $scope.timeline.getWindow()
