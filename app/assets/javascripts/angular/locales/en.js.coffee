@@ -1,6 +1,7 @@
 @Guru.config ($translateProvider) ->
 
   $translateProvider.translations "en",
+    CLEAR: "Clear"
     ERROR: "An error occurred, please try again."
     LANGUAGE: "Language"
     ADD: "Add"

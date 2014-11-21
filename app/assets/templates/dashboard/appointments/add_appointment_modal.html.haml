@@ -21,3 +21,4 @@
             %label {{ "APPOINTMENT.CUSTOMER" | translate }}
             %select#customer.form-control(name="customer_id" ng-model="appointment.customer_id" ng-options ="customer.id as customer.name for customer in customers" required="required" chosen)
           %button.btn.btn-primary.btn-lg(type="submit") {{ "ADD" | translate }}
+          %button.btn.btn-danger.btn-lg.clear(type="button" ng-click="appointment = {}") {{ "CLEAR" | translate }}
