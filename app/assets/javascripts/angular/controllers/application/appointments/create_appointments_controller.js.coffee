@@ -30,8 +30,9 @@
 
     $scope.pickADateOptions =
       format: "d mmmm yyyy"
-      min: new Date()
-    $scope.pickATimeOptions = {}
+      min: moment().format()
+    $scope.pickATimeOptions =
+      interval: 15
 
     $scope.addAppointment = ->
       AppointmentsService.createAppointment($scope.appointment).then (appointment) ->
