@@ -1,4 +1,4 @@
-angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
+angular.module('ng-token-auth', ['ipCookie']).provider('$auth', function() {
   var configs, defaultConfigName;
   configs = {
     "default": {
@@ -81,8 +81,8 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
       return configs;
     },
     $get: [
-      '$http', '$q', '$location', '$cookieStore', '$window', '$timeout', '$rootScope', '$interpolate', (function(_this) {
-        return function($http, $q, $location, $cookieStore, $window, $timeout, $rootScope, $interpolate) {
+      '$http', '$q', '$location', 'ipCookie', '$window', '$timeout', '$rootScope', '$interpolate', (function(_this) {
+        return function($http, $q, $location, ipCookie, $window, $timeout, $rootScope, $interpolate) {
           return {
             header: null,
             dfd: null,
@@ -94,7 +94,7 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
               return this.addScopeMethods();
             },
             initializeListeners: function() {
-              this.listener = this.handlePostMessage.bind(this);
+              this.listener = angular.bind(this, this.handlePostMessage);
               if ($window.addEventListener) {
                 return $window.addEventListener("message", this.listener, false);
               }
@@ -136,14 +136,14 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
             },
             addScopeMethods: function() {
               $rootScope.user = this.user;
-              $rootScope.authenticate = this.authenticate.bind(this);
-              $rootScope.signOut = this.signOut.bind(this);
-              $rootScope.destroyAccount = this.destroyAccount.bind(this);
-              $rootScope.submitRegistration = this.submitRegistration.bind(this);
-              $rootScope.submitLogin = this.submitLogin.bind(this);
-              $rootScope.requestPasswordReset = this.requestPasswordReset.bind(this);
-              $rootScope.updatePassword = this.updatePassword.bind(this);
-              $rootScope.updateAccount = this.updateAccount.bind(this);
+              $rootScope.authenticate = angular.bind(this, this.authenticate);
+              $rootScope.signOut = angular.bind(this, this.signOut);
+              $rootScope.destroyAccount = angular.bind(this, this.destroyAccount);
+              $rootScope.submitRegistration = angular.bind(this, this.submitRegistration);
+              $rootScope.submitLogin = angular.bind(this, this.submitLogin);
+              $rootScope.requestPasswordReset = angular.bind(this, this.requestPasswordReset);
+              $rootScope.updatePassword = angular.bind(this, this.updatePassword);
+              $rootScope.updateAccount = angular.bind(this, this.updateAccount);
               if (this.getConfig().validateOnPageLoad) {
                 return this.validateUser({
                   config: this.getSavedConfig()
@@ -175,7 +175,7 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
                 return function(resp) {
                   var authData;
                   _this.setConfigName(opts.config);
-                  authData = _this.getConfig(opts.config).handleLoginResponse(resp);
+                  authData = _this.getConfig(opts.config).handleLoginResponse(resp, _this);
                   _this.handleValidAuth(authData);
                   return $rootScope.$broadcast('auth:login-success', _this.user);
                 };
@@ -222,7 +222,21 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
             updateAccount: function(params) {
               return $http.put(this.apiUrl() + this.getConfig().accountUpdatePath, params).success((function(_this) {
                 return function(resp) {
-                  angular.extend(_this.user, _this.getConfig().handleAccountUpdateResponse(resp));
+                  var curHeaders, key, newHeaders, updateResponse, val, _ref;
+                  updateResponse = _this.getConfig().handleAccountUpdateResponse(resp);
+                  curHeaders = _this.retrieveData('auth_headers');
+                  angular.extend(_this.user, updateResponse);
+                  if (curHeaders) {
+                    newHeaders = {};
+                    _ref = _this.getConfig().tokenFormat;
+                    for (key in _ref) {
+                      val = _ref[key];
+                      if (curHeaders[key] && updateResponse[key]) {
+                        newHeaders[key] = updateResponse[key];
+                      }
+                    }
+                    _this.setAuthHeaders(newHeaders);
+                  }
                   return $rootScope.$broadcast('auth:account-update-success', resp);
                 };
               })(this)).error(function(resp) {
@@ -418,7 +432,7 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
               return expiry && expiry < now;
             },
             getExpiry: function() {
-              return this.getConfig().parseExpiry(this.retrieveData('auth_headers'));
+              return this.getConfig().parseExpiry(this.retrieveData('auth_headers') || {});
             },
             invalidateTokens: function() {
               var key, val, _ref;
@@ -478,7 +492,9 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
                 case 'localStorage':
                   return $window.localStorage.setItem(key, JSON.stringify(val));
                 default:
-                  return $cookieStore.put(key, val);
+                  return ipCookie(key, val, {
+                    path: '/'
+                  });
               }
             },
             retrieveData: function(key) {
@@ -486,7 +502,7 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
                 case 'localStorage':
                   return JSON.parse($window.localStorage.getItem(key));
                 default:
-                  return $cookieStore.get(key);
+                  return ipCookie(key);
               }
             },
             deleteData: function(key) {
@@ -494,7 +510,9 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
                 case 'localStorage':
                   return $window.localStorage.removeItem(key);
                 default:
-                  return $cookieStore.remove(key);
+                  return ipCookie.remove(key, {
+                    path: '/'
+                  });
               }
             },
             setAuthHeaders: function(h) {
@@ -549,9 +567,9 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
                 }
               }
               if (c == null) {
-                c = $cookieStore.get(key);
+                c = ipCookie(key);
               }
-              return c != null ? c : c = defaultConfigName;
+              return c || defaultConfigName;
             }
           };
         };
@@ -560,7 +578,27 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
   };
 }).config([
   '$httpProvider', function($httpProvider) {
-    var httpMethods;
+    var httpMethods, tokenIsCurrent, updateHeadersFromResponse;
+    tokenIsCurrent = function($auth, headers) {
+      var newTokenExpiry, oldTokenExpiry;
+      oldTokenExpiry = Number($auth.getExpiry());
+      newTokenExpiry = Number($auth.getConfig().parseExpiry(headers || {}));
+      return newTokenExpiry >= oldTokenExpiry;
+    };
+    updateHeadersFromResponse = function($auth, resp) {
+      var key, newHeaders, val, _ref;
+      newHeaders = {};
+      _ref = $auth.getConfig().tokenFormat;
+      for (key in _ref) {
+        val = _ref[key];
+        if (resp.headers(key)) {
+          newHeaders[key] = resp.headers(key);
+        }
+      }
+      if (tokenIsCurrent($auth, newHeaders)) {
+        return $auth.setAuthHeaders(newHeaders);
+      }
+    };
     $httpProvider.interceptors.push([
       '$injector', function($injector) {
         return {
@@ -584,21 +622,22 @@ angular.module('ng-token-auth', ['ngCookies']).provider('$auth', function() {
           response: function(resp) {
             $injector.invoke([
               '$http', '$auth', function($http, $auth) {
-                var key, newHeaders, val, _ref;
                 if (resp.config.url.match($auth.apiUrl())) {
-                  newHeaders = {};
-                  _ref = $auth.getConfig().tokenFormat;
-                  for (key in _ref) {
-                    val = _ref[key];
-                    if (resp.headers(key)) {
-                      newHeaders[key] = resp.headers(key);
-                    }
-                  }
-                  return $auth.setAuthHeaders(newHeaders);
+                  return updateHeadersFromResponse($auth, resp);
                 }
               }
             ]);
             return resp;
+          },
+          responseError: function(resp) {
+            $injector.invoke([
+              '$http', '$auth', function($http, $auth) {
+                if (resp.config.url.match($auth.apiUrl())) {
+                  return updateHeadersFromResponse($auth, resp);
+                }
+              }
+            ]);
+            return $injector.get('$q').reject(resp);
           }
         };
       }

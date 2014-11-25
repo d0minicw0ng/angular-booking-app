@@ -1,4 +1,4 @@
-angular.module('ng-token-auth', ['ngCookies'])
+angular.module('ng-token-auth', ['ipCookie'])
   .provider('$auth', ->
     configs =
       default:
@@ -82,18 +82,17 @@ angular.module('ng-token-auth', ['ngCookies'])
         '$http'
         '$q'
         '$location'
-        '$cookieStore'
+        'ipCookie'
         '$window'
         '$timeout'
         '$rootScope'
         '$interpolate'
-        ($http, $q, $location, $cookieStore, $window, $timeout, $rootScope, $interpolate) =>
+        ($http, $q, $location, ipCookie, $window, $timeout, $rootScope, $interpolate) =>
           header:            null
           dfd:               null
           user:              {}
           mustResetPassword: false
           listener:          null
-
 
           # called once at startup
           initialize: ->
@@ -102,7 +101,8 @@ angular.module('ng-token-auth', ['ngCookies'])
 
 
           initializeListeners: ->
-            @listener = @handlePostMessage.bind(@)
+            #@listener = @handlePostMessage.bind(@)
+            @listener = angular.bind(@, @handlePostMessage)
 
             if $window.addEventListener
               $window.addEventListener("message", @listener, false)
@@ -151,16 +151,16 @@ angular.module('ng-token-auth', ['ngCookies'])
             $rootScope.user = @user
 
             # template access to authentication method
-            $rootScope.authenticate  = @authenticate.bind(@)
+            $rootScope.authenticate  = angular.bind(@, @authenticate)
 
             # template access to view actions
-            $rootScope.signOut              = @signOut.bind(@)
-            $rootScope.destroyAccount       = @destroyAccount.bind(@)
-            $rootScope.submitRegistration   = @submitRegistration.bind(@)
-            $rootScope.submitLogin          = @submitLogin.bind(@)
-            $rootScope.requestPasswordReset = @requestPasswordReset.bind(@)
-            $rootScope.updatePassword       = @updatePassword.bind(@)
-            $rootScope.updateAccount        = @updateAccount.bind(@)
+            $rootScope.signOut              = angular.bind(@, @signOut)
+            $rootScope.destroyAccount       = angular.bind(@, @destroyAccount)
+            $rootScope.submitRegistration   = angular.bind(@, @submitRegistration)
+            $rootScope.submitLogin          = angular.bind(@, @submitLogin)
+            $rootScope.requestPasswordReset = angular.bind(@, @requestPasswordReset)
+            $rootScope.updatePassword       = angular.bind(@, @updatePassword)
+            $rootScope.updateAccount        = angular.bind(@, @updateAccount)
 
             # check to see if user is returning user
             if @getConfig().validateOnPageLoad
@@ -191,7 +191,7 @@ angular.module('ng-token-auth', ['ngCookies'])
             $http.post(@apiUrl(opts.config) + @getConfig(opts.config).emailSignInPath, params)
               .success((resp) =>
                 @setConfigName(opts.config)
-                authData = @getConfig(opts.config).handleLoginResponse(resp)
+                authData = @getConfig(opts.config).handleLoginResponse(resp, @)
                 @handleValidAuth(authData)
                 $rootScope.$broadcast('auth:login-success', @user)
               )
@@ -244,7 +244,21 @@ angular.module('ng-token-auth', ['ngCookies'])
           updateAccount: (params) ->
             $http.put(@apiUrl() + @getConfig().accountUpdatePath, params)
               .success((resp) =>
-                angular.extend @user, @getConfig().handleAccountUpdateResponse(resp)
+
+                updateResponse = @getConfig().handleAccountUpdateResponse(resp)
+                curHeaders = @retrieveData('auth_headers')
+
+                angular.extend @user, updateResponse
+
+                # ensure any critical headers (uid + ?) that are returned in
+                # the update response are updated appropriately in storage
+                if curHeaders
+                  newHeaders = {}
+                  for key, val of @getConfig().tokenFormat
+                    if curHeaders[key] && updateResponse[key]
+                      newHeaders[key] = updateResponse[key]
+                  @setAuthHeaders(newHeaders)
+
                 $rootScope.$broadcast('auth:account-update-success', resp)
               )
               .error((resp) ->
@@ -278,6 +292,7 @@ angular.module('ng-token-auth', ['ngCookies'])
           setConfigName: (configName) ->
             configName ?= defaultConfigName
             @persistData('currentConfigName', configName, configName)
+
 
           # open external window to authentication provider
           openAuthWindow: (provider, opts) ->
@@ -470,7 +485,7 @@ angular.module('ng-token-auth', ['ngCookies'])
 
           # get expiry by method provided in config
           getExpiry: ->
-            @getConfig().parseExpiry(@retrieveData('auth_headers'))
+            @getConfig().parseExpiry(@retrieveData('auth_headers') || {})
 
 
           # this service attempts to cache auth tokens, but sometimes we
@@ -545,7 +560,8 @@ angular.module('ng-token-auth', ['ngCookies'])
             switch @getConfig(configName).storage
               when 'localStorage'
                 $window.localStorage.setItem(key, JSON.stringify(val))
-              else $cookieStore.put(key, val)
+              else
+                ipCookie(key, val, {path: '/'})
 
 
           # abstract persistent data retrieval
@@ -553,7 +569,7 @@ angular.module('ng-token-auth', ['ngCookies'])
             switch @getConfig().storage
               when 'localStorage'
                 JSON.parse($window.localStorage.getItem(key))
-              else $cookieStore.get(key)
+              else ipCookie(key)
 
 
           # abstract persistent data removal
@@ -561,7 +577,8 @@ angular.module('ng-token-auth', ['ngCookies'])
             switch @getConfig().storage
               when 'localStorage'
                 $window.localStorage.removeItem(key)
-              else $cookieStore.remove(key)
+              else
+                ipCookie.remove(key, {path: '/'})
 
 
           # persist authentication token, client id, uid
@@ -623,7 +640,7 @@ angular.module('ng-token-auth', ['ngCookies'])
 
           # can't rely on retrieveData because it will cause a recursive loop
           # if config hasn't been initialized. instead find first available
-          # value of 'defaultConfigName' searches the following places in
+          # value of 'defaultConfigName'. searches the following places in
           # this priority:
           # 1. localStorage
           # 2. cookies
@@ -635,9 +652,9 @@ angular.module('ng-token-auth', ['ngCookies'])
             if $window.localStorage
               c ?= JSON.parse($window.localStorage.getItem(key))
 
-            c ?= $cookieStore.get(key)
+            c ?= ipCookie(key)
 
-            c ?= defaultConfigName
+            return c || defaultConfigName
 
       ]
     }
@@ -647,6 +664,26 @@ angular.module('ng-token-auth', ['ngCookies'])
   # each response will contain auth headers that have been updated by
   # the server. copy those headers for use in the next request.
   .config(['$httpProvider', ($httpProvider) ->
+
+    # responses are sometimes returned out of order. check that response is
+    # current before saving the auth data.
+    tokenIsCurrent = ($auth, headers) ->
+      oldTokenExpiry = Number($auth.getExpiry())
+      newTokenExpiry = Number($auth.getConfig().parseExpiry(headers || {}))
+
+      return newTokenExpiry >= oldTokenExpiry
+
+
+    # uniform handling of response headers for success or error conditions
+    updateHeadersFromResponse = ($auth, resp) ->
+      newHeaders = {}
+      for key, val of $auth.getConfig().tokenFormat
+        if resp.headers(key)
+          newHeaders[key] = resp.headers(key)
+
+      if tokenIsCurrent($auth, newHeaders)
+        $auth.setAuthHeaders(newHeaders)
+
     # this is ugly...
     # we need to configure an interceptor (must be done in the configuration
     # phase), but we need access to the $http service, which is only available
@@ -666,16 +703,18 @@ angular.module('ng-token-auth', ['ngCookies'])
       response: (resp) ->
         $injector.invoke ['$http', '$auth', ($http, $auth) ->
           if resp.config.url.match($auth.apiUrl())
-            newHeaders = {}
-
-            for key, val of $auth.getConfig().tokenFormat
-              if resp.headers(key)
-                newHeaders[key] = resp.headers(key)
-
-            $auth.setAuthHeaders(newHeaders)
+            return updateHeadersFromResponse($auth, resp)
         ]
 
         return resp
+
+      responseError: (resp) ->
+        $injector.invoke ['$http', '$auth', ($http, $auth) ->
+          if resp.config.url.match($auth.apiUrl())
+            return updateHeadersFromResponse($auth, resp)
+        ]
+
+        return $injector.get('$q').reject(resp)
     ]
 
     # define http methods that may need to carry auth headers

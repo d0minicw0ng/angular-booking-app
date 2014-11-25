@@ -1,10 +1,10 @@
+# Simple, secure authentication for AngularJS.
+
  ![Serious Trust](https://raw.githubusercontent.com/lynndylanhurley/ng-token-auth/master/test/app/images/serious-trust.jpg "Serious Trust")
 
 [![Bower version](https://badge.fury.io/bo/ng-token-auth.svg)](http://badge.fury.io/bo/ng-token-auth)
 [![Build Status](https://travis-ci.org/lynndylanhurley/ng-token-auth.svg?branch=master)](https://travis-ci.org/lynndylanhurley/ng-token-auth)
 [![Test Coverage](https://codeclimate.com/github/lynndylanhurley/ng-token-auth/coverage.png)](https://codeclimate.com/github/lynndylanhurley/ng-token-auth)
-
-# Simple, secure authentication for AngularJS.
 
 This module provides the following features:
 
@@ -77,6 +77,7 @@ This project comes bundled with a test app. You can run the demo locally by foll
 * [Development](#development)
 * [Contribution Guidelines](#contributing)
 * [Alteratives to This Module](#alternatives)
+* [Callouts](#callouts)
 
 # About this module
 
@@ -98,11 +99,11 @@ This module was designed to work out of the box with the outstanding [devise tok
   bower install ng-token-auth --save
   ~~~
   
-* Ensure that [angularjs](https://github.com/angular/angular.js), [ng-cookies](https://docs.angularjs.org/api/ngCookies), and ng-token-auth are included on your page: 
+* Ensure that [angularjs](https://github.com/angular/angular.js), [angular-cookie](https://github.com/ivpusic/angular-cookie), and ng-token-auth are included on your page: 
   ~~~html
   <!-- in your index.html file -->
   <script src="/js/angular/angular.js"></script>
-  <script src="/js/angular-cookies/angular-cookies.js"></script>
+  <script src="/js/angular-cookie/angular-cookie.js"></script>
   <script src="/js/ng-token-auth/dist/ng-token-auth.js"></script>
   ~~~
   
@@ -766,7 +767,7 @@ Broadcast when requests resulting from the [`$auth.updatePassword`](#authupdatep
 
 ##### Example:
 ~~~javascript
-$scope.$on('auth:registration-change-error', function(ev, reason) {
+$scope.$on('auth:password-change-error', function(ev, reason) {
   alert("Registration failed: " + reason.errors[0]);
 });
 ~~~
@@ -1085,7 +1086,7 @@ Rails example: [controller](https://github.com/lynndylanhurley/ng-token-auth-api
 
 ## Token validation flow
 
-The client's tokens are stored in cookies using the ngCookie module. This is done so that users won't need to re-authenticate each time they return to the site or refresh the page.
+The client's tokens are stored in cookies using the ipCookie module. This is done so that users won't need to re-authenticate each time they return to the site or refresh the page.
 
 ![validation flow](https://github.com/lynndylanhurley/ng-token-auth/raw/master/test/app/images/flow/validation-flow.jpg)
 
@@ -1295,6 +1296,20 @@ Satellizer occupies the same problem domain as ng-token-auth. Advantages of ng-t
   * Supports [account updates](#authupdateaccount) and [account deletion](#authdestroyaccount).
   * Supports [changing tokens with each request](#about-token-management).
   * Supports [multiple user types](#using-multiple-user-types).
+
+# Callouts
+
+Thanks to the following contributors:
+
+* [@booleanbetrayal](https://github.com/booleanbetrayal)
+* [@guilhermesimoes](https://github.com/guilhermesimoes)
+* [@jasonswett](https://github.com/jasonswett)
+* [@m2omou](https://github.com/m2omou)
+* [@smarquez1](https://github.com/smarquez1)
+
+Special thanks to [@jasonswett](https://github.com/jasonswett) for [this helpful guide](https://www.airpair.com/ruby-on-rails-4/posts/authentication-with-angularjs-and-ruby-on-rails)!
+
+This module has been featured by [http://angular-js.in](http://angular-js.in/).
 
 # License
 
