@@ -1,3 +1,5 @@
+a { cursor: pointer; }
+
 .alert {
   position: absolute;
   top: 30px;
@@ -23,9 +25,7 @@
       width: 100%;
       margin-left: 0em;
     }
-    li:last-child {
-      list-style: none;
-    }
+    li:last-child { list-style: none; }
   }
 }
 
@@ -36,9 +36,7 @@
     cursor: pointer;
   }
 
-  .flag-icon {
-    padding-left: 35px;
-  }
+  .flag-icon { padding-left: 35px; }
 }
 
 // sortable table
@@ -50,9 +48,7 @@ th.sortable { cursor: pointer }
 .intl-tel-input {
   display: block !important; // Unfortunately
   ul.country-list {
-    li {
-      list-style: none;
-    }
+    li { list-style: none; }
     li.country {
       margin-bottom: 0px;
       margin-left: 0px;
@@ -66,9 +62,7 @@ th.sortable { cursor: pointer }
   margin-top: 15px;
 }
 
-input#calendar-date {
-  background-color: #FFFFFF;
-}
+input#calendar-date { background-color: #FFFFFF; }
 
 .inner,
 .text.major {
@@ -76,6 +70,5 @@ input#calendar-date {
 }
 
 // Account
-#edit-account-form {
-  margin-bottom: 10px;
-}
+#edit-account-form { margin-bottom: 10px; }
+.toggle-login-form { margin-bottom: 10px; }

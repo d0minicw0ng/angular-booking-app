@@ -1,15 +1,29 @@
-#login-form.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Login", :role => "dialog", :tabindex => "-1"}
+#login-form.modal.fade(ng-controller="SessionsController" aria-hidden="true" aria-labelledby="Login" role="dialog" tabindex="-1")
   .modal-dialog
     .modal-content
       .modal-header
-        %h4#login-form.modal-title {{ "SESSION.SIGNIN" | translate }}
-      .modal-body(ng-controller="SessionsController")
-        %form{"ng-init" => "loginForm = {}", "ng-submit" => "submitLogin(loginForm)", :role => "form"}
+        %h4.modal-title(ng-hide="forgotPasswordModal") {{ "SESSION.SIGNIN" | translate }}
+        %h4.modal-title(ng-show="forgotPasswordModal") {{ "SESSION.FORGOT_YOUR_PASSWORD" | translate }}
+      .modal-body
+        %form(ng-init="loginForm = {}" ng-submit = "submitLogin(loginForm)" role="form" ng-hide="forgotPasswordModal")
           .form-group
             %label {{ "USER.EMAIL" | translate }}
-            %input.form-control{:name => "email", "ng-model" => "loginForm.email", :required => "required", :type => "email"}
+            %input.form-control(name="email" ng-model="loginForm.email" required="required" type="email")
           .form-group
             %label {{ "USER.PASSWORD" | translate }}
-            %input.form-control{:name => "password", "ng-model" => "loginForm.password", :required => "required", :type => "password"}
+            %input.form-control(name="password" ng-model="loginForm.password"required="required"type="password")
 
-          %button.btn.btn-primary.btn-lg{:type => "submit"} {{ "SESSION.SIGNIN" | translate }}
+          %div.toggle-login-form#forgot-your-password
+            %a(ng-click="forgotPasswordModal = true") {{ "SESSION.FORGOT_YOUR_PASSWORD" | translate }}
+
+          %button.btn.btn-primary.btn-lg(type="submit") {{ "SESSION.SIGNIN" | translate }}
+
+        %form(ng-submit="requestPasswordReset()" role="form" ng-init="passwordResetForm = {}" ng-show="forgotPasswordModal")
+          .form-group
+            %label {{ "USER.EMAIL" | translate }}
+            %input.form-control(type="email" ng-model="passwordResetForm.email" required="required")
+
+          %div.toggle-login-form#login
+            %a(ng-click="forgotPasswordModal = false") {{ "SESSION.SIGNIN" | translate }}
+
+          %button.btn.btn-primary.btn-lg(type="submit") {{ "SESSION.REQUEST_PASSWORD_RESET" | translate }}

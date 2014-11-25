@@ -11,7 +11,7 @@
   "angularMoment"
 ])
 
-
 @Guru.config ($authProvider) ->
-  $authProvider.configure apiUrl: window.location.origin
+  $authProvider.configure
+    apiUrl: window.location.origin
 

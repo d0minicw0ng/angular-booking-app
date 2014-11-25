@@ -57,6 +57,9 @@
       EMPLOYEE_ADDED: "You have successfully added an employee."
       CUSTOMER_ADDED: "You have successfully added a customer."
       INVALID_CREDENTIALS: "Your username/password combination is incorrect."
+      FORGOT_YOUR_PASSWORD: "Forgot your password?"
+      REQUEST_PASSWORD_RESET: "Request Password Reset"
+      RESET_PASSWORD_EMAIL_SENT: "An email has been sent to your account for instructions to reset your password."
     DASHBOARD:
       MANAGE_YOUR_APPOINTMENTS: "Manage your appointments"
       MANAGE_YOUR_CUSTOMERS: "Manage your customers"

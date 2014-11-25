@@ -7,6 +7,7 @@
   "$http"
   ($scope, $auth, $translate, $state, $http) ->
 
+    # TODO: RegistrationController
     $scope.submitRegistration = ->
       # TODO: Is this quite clumsy to do the whole getting company's name here?
       companyName = $scope.private._getUsersCompanyName()
@@ -53,9 +54,15 @@
           console.log err
           $scope.alertDanger("ERROR")
 
-    $scope.$on 'auth:email-confirmation-success', (ev, user) ->
-      $scope.setCurrentUser user
-      $state.go "dashboard"
-      $scope.alertSuccess "SESSION.EMAIL_CONFIRMED"
+    $scope.forgotPasswordModal = false
+
+    $scope.requestPasswordReset = ->
+      $auth.requestPasswordReset($scope.passwordResetForm)
+        .then ->
+          $scope.alertSuccess "SESSION.RESET_PASSWORD_EMAIL_SENT"
+          $scope.passwordResetForm = {}
+          $scope.forgotPasswordModal = false
+        .catch ->
+          $scope.alertDanger "ERROR"
   ]
 

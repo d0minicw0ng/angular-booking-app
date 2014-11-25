@@ -6,7 +6,7 @@
     $scope.viewOnly = true
     $scope.user = $scope.currentUser()
 
-    $("#mobile-phone-number").val $scope.user.mobile_phone_number_formatted
+    $("#mobile-phone-number").val $scope.user?.mobile_phone_number_formatted
 
     $scope.toggleEditMode = ->
       $scope.viewOnly = !$scope.viewOnly
