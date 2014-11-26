@@ -1,0 +1,23 @@
+#statistics(ng-controller="StatisticsController")
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title {{ "STATISTICS.MONTHLY_APPOINTMENTS_STATISTICS" | translate }}
+        .panel-body
+          %canvas#monthly-appointments-chart.chart(tc-chartjs chart-type="line" chart-data="appointmentsData" chart-options="appointmentsOptions" width="952" height="500")
+
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title {{ "STATISTICS.MONTHLY_EMPLOYEES_STATISTICS" | translate }}
+        .panel-body
+          -# %canvas(tc-chartjs tc-chartjs-bar chart-data="employeesData" chart-options="employeesOptions")
+
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title {{ "STATISTICS.MONTHLY_FINANCIAL_STATISTICS" | translate }}
+        .panel-body
+          -# %canvas(tc-chartjs tc-chartjs-bar chart-data="financialData" chart-options="financialOptions")

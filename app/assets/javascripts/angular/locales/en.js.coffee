@@ -64,4 +64,9 @@
       MANAGE_YOUR_APPOINTMENTS: "Manage your appointments"
       MANAGE_YOUR_CUSTOMERS: "Manage your customers"
       MANAGE_YOUR_EMPLOYEES: "Manage your employees"
+      STATISTICS: "Operation Statistics"
       ACCOUNT_SETTINGS: "Update Your Account"
+    STATISTICS:
+      MONTHLY_APPOINTMENTS_STATISTICS: "Monthly Appointments Statistics"
+      MONTHLY_EMPLOYEES_STATISTICS: "Monthly Employees Statistics"
+      MONTHLY_FINANCIAL_STATISTICS: "Monthly Financial Statistics"

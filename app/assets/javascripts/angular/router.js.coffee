@@ -12,6 +12,13 @@
         auth: ($auth) ->
           $auth.validateUser()
 
+    .state "dashboard.statistics",
+      url: "/statistics"
+      templateUrl: "dashboard/dashboard.statistics.html"
+      resolve:
+        auth: ($auth) ->
+          $auth.validateUser()
+
     .state "dashboard.employees",
       url: "/employees"
       templateUrl: "dashboard/employees/dashboard.employees.html"

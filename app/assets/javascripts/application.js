@@ -27,9 +27,12 @@
 //= require ../../../vendor/assets/bower_components/intl-tel-input/lib/libphonenumber/build/utils
 //= require ../../../vendor/assets/bower_components/vis/dist/vis.min
 //= require ../../../vendor/assets/bower_components/lodash/dist/lodash.min
+//= require ../../../vendor/assets/bower_components/Chart.js/Chart.min
+//= require ../../../vendor/assets/bower_components/tc-angular-chartjs/dist/tc-angular-chartjs.min
 
 //= require ./angular/main
 //= require ./angular/router
+//= require ./angular/constants
 //= require_tree ./angular/directives
 //= require_tree ./angular/services
 //= require_tree ./angular/controllers

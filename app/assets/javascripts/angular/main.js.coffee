@@ -9,6 +9,7 @@
   "angular-datepicker"
   "smart-table"
   "angularMoment"
+  "tc.chartjs"
 ])
 
 @Guru.config ($authProvider) ->

@@ -8,7 +8,7 @@ a { cursor: pointer; }
   z-index: 1051; // sidebar z-index is 1000, modal form z-index is 1050
 }
 
-#dashboard-wrapper { margin-top: 35px; }
+#dashboard-wrapper { margin-top: 50px; }
 
 // NOTE: Fix to chosen returning 0px width when the selector
 // is not visible in the first place. It's not pretty, but it

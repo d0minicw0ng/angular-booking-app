@@ -13,6 +13,11 @@ class Appointment < ActiveRecord::Base
   validate :masseur_does_not_have_conflicting_appointments
   validate :customer_does_not_have_conflicting_appointments
 
+  def self.of_company company_id
+    self.joins(:masseur)
+      .where "users.company_id = ?", company_id
+  end
+
   private
 
   def masseur_does_not_have_conflicting_appointments

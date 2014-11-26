@@ -19,8 +19,8 @@
       //resolve duplication
       "intl-tel-input"            : "latest",
       "vis"                       : "latest",
-      "lodash"                    : "latest"
-
+      "lodash"                    : "latest",
+      "tc-angular-chartjs"        : "latest"
     }
   }
 }
