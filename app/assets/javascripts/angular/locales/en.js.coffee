@@ -68,5 +68,6 @@
       ACCOUNT_SETTINGS: "Update Your Account"
     STATISTICS:
       MONTHLY_APPOINTMENTS_STATISTICS: "Monthly Appointments Statistics"
-      MONTHLY_EMPLOYEES_STATISTICS: "Monthly Employees Statistics"
       MONTHLY_FINANCIAL_STATISTICS: "Monthly Financial Statistics"
+      MONTHLY_EMPLOYEES_STATISTICS: "Monthly Employees Statistics"
+      MONTHLY_CUSTOMERS_STATISTICS: "Monthly Customers Statistics"

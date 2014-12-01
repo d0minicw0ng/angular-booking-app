@@ -8,6 +8,13 @@ a { cursor: pointer; }
   z-index: 1051; // sidebar z-index is 1000, modal form z-index is 1050
 }
 
+.spinner {
+  height: 30px;
+  background-image: url("/assets/spinner.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 #dashboard-wrapper { margin-top: 50px; }
 
 // NOTE: Fix to chosen returning 0px width when the selector

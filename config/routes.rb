@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :companies, only: [:create]
       get "employees", to: "users#employees"
+      get "top-employees", to: "users#top_employees"
+      get "top-customers", to: "users#top_customers"
       get "customers", to: "users#customers"
       resources :appointments, only: [:create, :index, :update, :destroy]
     end

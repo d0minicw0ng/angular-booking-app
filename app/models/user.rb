@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   belongs_to :company
+  has_many :jobs, class_name: "Appointment", foreign_key: :masseur_id
+  has_many :appointments, foreign_key: :customer_id
 
   validates_presence_of :first_name
   validates_presence_of :last_name

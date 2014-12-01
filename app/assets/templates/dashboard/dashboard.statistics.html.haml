@@ -1,3 +1,4 @@
+// TODO: spinner
 #statistics(ng-controller="StatisticsController")
   .row
     .col-md-12
@@ -5,19 +6,20 @@
         .panel-heading
           %h3.panel-title {{ "STATISTICS.MONTHLY_APPOINTMENTS_STATISTICS" | translate }}
         .panel-body
-          %canvas#monthly-appointments-chart.chart(tc-chartjs chart-type="line" chart-data="appointmentsData" chart-options="appointmentsOptions" width="952" height="500")
+          %canvas#monthly-appointments-chart(tc-chartjs chart-type="line" chart-data="appointmentsData" width="952" height="500")
 
   .row
-    .col-md-6
+    .col-md-12
       .panel.panel-default
         .panel-heading
           %h3.panel-title {{ "STATISTICS.MONTHLY_EMPLOYEES_STATISTICS" | translate }}
         .panel-body
-          -# %canvas(tc-chartjs tc-chartjs-bar chart-data="employeesData" chart-options="employeesOptions")
+          %canvas#monthly-employees-chart(tc-chartjs chart-type="bar" chart-data="employeesData" width="952" height="500")
 
-    .col-md-6
+  .row
+    .col-md-12
       .panel.panel-default
         .panel-heading
-          %h3.panel-title {{ "STATISTICS.MONTHLY_FINANCIAL_STATISTICS" | translate }}
+          %h3.panel-title {{ "STATISTICS.MONTHLY_CUSTOMERS_STATISTICS" | translate }}
         .panel-body
-          -# %canvas(tc-chartjs tc-chartjs-bar chart-data="financialData" chart-options="financialOptions")
+          %canvas#monthly-customers-chart(tc-chartjs chart-type="bar" chart-data="customersData" width="952" height="500")
