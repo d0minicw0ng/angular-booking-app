@@ -77,6 +77,7 @@ exports._createManipulatorBar = function() {
     this.edgeBeingEdited = undefined;
     this.selectedControlNode = null;
     this.controlNodesActive = false;
+    this._redraw();
   }
 
   // restore overloaded functions
@@ -402,7 +403,7 @@ exports._controlNodeDrag = function(event) {
 
 exports._releaseControlNode = function(pointer) {
   var newNode = this._getNodeAt(pointer);
-  if (newNode != null) {
+  if (newNode !== null) {
     if (this.edgeBeingEdited.controlNodes.from.selected == true) {
       this._editEdge(newNode.id, this.edgeBeingEdited.to.id);
       this.edgeBeingEdited.controlNodes.from.unselect();

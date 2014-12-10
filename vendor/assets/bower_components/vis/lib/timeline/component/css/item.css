@@ -61,8 +61,8 @@
 .vis.timeline .item.range .content {
   position: relative;
   display: inline-block;
-  overflow: hidden;
   max-width: 100%;
+  overflow: hidden;
 }
 
 .vis.timeline .item.background .content {

@@ -53,6 +53,7 @@ function LineGraph(body, options) {
       icons: false,
       width: '40px',
       visible: true,
+      alignZeros: true,
       customRange: {
         left: {min:undefined, max:undefined},
         right: {min:undefined, max:undefined}
@@ -137,11 +138,11 @@ function LineGraph(body, options) {
   this.svgElements = {};
   this.setOptions(options);
   this.groupsUsingDefaultStyles = [0];
-
+  this.COUNTER = 0;
   this.body.emitter.on('rangechanged', function() {
     me.lastStart = me.body.range.start;
     me.svg.style.left = util.option.asSize(-me.width);
-    me._updateGraph.apply(me);
+    me.redraw.call(me,true);
   });
 
   // create the HTML DOM
@@ -239,8 +240,10 @@ LineGraph.prototype.setOptions = function(options) {
       this.groups[UNGROUPED].setOptions(options);
     }
   }
+
+  // this is used to redraw the graph if the visibility of the groups is changed.
   if (this.dom.frame) {
-    this._updateGraph();
+    this.redraw(true);
   }
 };
 
@@ -310,8 +313,8 @@ LineGraph.prototype.setItems = function(items) {
     this._onAdd(ids);
   }
   this._updateUngrouped();
-  this._updateGraph();
-  this.redraw();
+  //this._updateGraph();
+  this.redraw(true);
 };
 
 
@@ -369,8 +372,8 @@ LineGraph.prototype.setGroups = function(groups) {
 LineGraph.prototype._onUpdate = function(ids) {
   this._updateUngrouped();
   this._updateAllGroupData();
-  this._updateGraph();
-  this.redraw();
+  //this._updateGraph();
+  this.redraw(true);
 };
 LineGraph.prototype._onAdd          = function (ids) {this._onUpdate(ids);};
 LineGraph.prototype._onRemove       = function (ids) {this._onUpdate(ids);};
@@ -380,8 +383,8 @@ LineGraph.prototype._onUpdateGroups  = function (groupIds) {
     this._updateGroup(group, groupIds[i]);
   }
 
-  this._updateGraph();
-  this.redraw();
+  //this._updateGraph();
+  this.redraw(true);
 };
 LineGraph.prototype._onAddGroups = function (groupIds) {this._onUpdateGroups(groupIds);};
 
@@ -408,8 +411,8 @@ LineGraph.prototype._onRemoveGroups = function (groupIds) {
     }
   }
   this._updateUngrouped();
-  this._updateGraph();
-  this.redraw();
+  //this._updateGraph();
+  this.redraw(true);
 };
 
 
@@ -535,7 +538,7 @@ LineGraph.prototype._updateUngrouped = function() {
  * Redraw the component, mandatory function
  * @return {boolean} Returns true if the component is resized
  */
-LineGraph.prototype.redraw = function() {
+LineGraph.prototype.redraw = function(forceGraphUpdate) {
   var resized = false;
 
   this.svg.style.height = ('' + this.options.graphHeight).replace('px','') + 'px';
@@ -546,7 +549,7 @@ LineGraph.prototype.redraw = function() {
   resized = this._isResized() || resized;
   // check whether zoomed (in that case we need to re-stack everything)
   var visibleInterval = this.body.range.end - this.body.range.start;
-  var zoomed = (visibleInterval != this.lastVisibleInterval) || (this.width != this.lastWidth);
+  //var zoomed = (visibleInterval != this.lastVisibleInterval) || (this.width != this.lastWidth); // we get this from the range changed event
   this.lastVisibleInterval = visibleInterval;
   this.lastWidth = this.width;
 
@@ -560,8 +563,8 @@ LineGraph.prototype.redraw = function() {
     this.svg.style.left = util.option.asSize(-this.width);
   }
 
-  if (zoomed == true || this.abortedGraphUpdate == true) {
-    this._updateGraph();
+  if (this.abortedGraphUpdate == true || forceGraphUpdate == true) {
+    resized = resized || this._updateGraph();
   }
   else {
     // move the whole svg while dragging
@@ -604,6 +607,7 @@ LineGraph.prototype._updateGraph = function () {
         this.options.graphHeight = this.body.domProps.centerContainer.height + 'px';
         this.svg.style.height = this.body.domProps.centerContainer.height + 'px';
       }
+      this.autoSizeSVG = false;
     }
 
     // getting group Ids
@@ -618,7 +622,7 @@ LineGraph.prototype._updateGraph = function () {
     }
     if (groupIds.length > 0) {
       // this is the range of the SVG canvas
-      var minDate = this.body.util.toGlobalTime(- this.body.domProps.root.width);
+      var minDate = this.body.util.toGlobalTime(-this.body.domProps.root.width);
       var maxDate = this.body.util.toGlobalTime(2 * this.body.domProps.root.width);
       var groupsData = {};
       // fill groups data, this only loads the data we require based on the timewindow
@@ -638,34 +642,42 @@ LineGraph.prototype._updateGraph = function () {
       // update the Y axis first, we use this data to draw at the correct Y points
       // changeCalled is required to clean the SVG on a change emit.
       changeCalled = this._updateYAxis(groupIds, groupRanges);
-      if (changeCalled == true) {
+      var MAX_CYCLES = 5;
+      if (changeCalled == true && this.COUNTER < MAX_CYCLES) {
         DOMutil.cleanupElements(this.svgElements);
         this.abortedGraphUpdate = true;
+        this.COUNTER++;
         this.body.emitter.emit('change');
-        return;
+        return true;
       }
-      this.abortedGraphUpdate = false;
-
-      // With the yAxis scaled correctly, use this to get the Y values of the points.
-      for (i = 0; i < groupIds.length; i++) {
-        group = this.groups[groupIds[i]];
-        processedGroupData[groupIds[i]] = this._convertYcoordinates(groupsData[groupIds[i]], group);
-      }
-
-
-      // draw the groups
-      for (i = 0; i < groupIds.length; i++) {
-        group = this.groups[groupIds[i]];
-        if (group.options.style != 'bar') { // bar needs to be drawn enmasse
-          group.draw(processedGroupData[groupIds[i]], group, this.framework);
+      else {
+        if (this.COUNTER > MAX_CYCLES) {
+          console.log("WARNING: there may be an infinite loop in the _updateGraph emitter cycle.")
         }
+        this.COUNTER = 0;
+        this.abortedGraphUpdate = false;
+
+        // With the yAxis scaled correctly, use this to get the Y values of the points.
+        for (i = 0; i < groupIds.length; i++) {
+          group = this.groups[groupIds[i]];
+          processedGroupData[groupIds[i]] = this._convertYcoordinates(groupsData[groupIds[i]], group);
+        }
+
+        // draw the groups
+        for (i = 0; i < groupIds.length; i++) {
+          group = this.groups[groupIds[i]];
+          if (group.options.style != 'bar') { // bar needs to be drawn enmasse
+            group.draw(processedGroupData[groupIds[i]], group, this.framework);
+          }
+        }
+        BarGraphFunctions.draw(groupIds, processedGroupData, this.framework);
       }
-      BarGraphFunctions.draw(groupIds, processedGroupData, this.framework);
     }
   }
 
   // cleanup unused svg elements
   DOMutil.cleanupElements(this.svgElements);
+  return false;
 };
 
 
@@ -806,6 +818,22 @@ LineGraph.prototype._updateYAxis = function (groupIds, groupRanges) {
   var minLeft = 1e9, minRight = 1e9, maxLeft = -1e9, maxRight = -1e9, minVal, maxVal;
   // if groups are present
   if (groupIds.length > 0) {
+    // this is here to make sure that if there are no items in the axis but there are groups, that there is no infinite draw/redraw loop.
+    for (var i = 0; i < groupIds.length; i++) {
+      var group = this.groups[groupIds[i]];
+      if (group && group.options.yAxisOrientation == 'left') {
+        yAxisLeftUsed = true;
+        minLeft = 0;
+        maxLeft = 0;
+      }
+      else {
+        yAxisRightUsed = true;
+        minRight = 0;
+        maxRight = 0;
+      }
+    }
+
+    // if there are items:
     for (var i = 0; i < groupIds.length; i++) {
       if (groupRanges.hasOwnProperty(groupIds[i])) {
         if (groupRanges[groupIds[i]].ignore !== true) {
@@ -833,7 +861,6 @@ LineGraph.prototype._updateYAxis = function (groupIds, groupRanges) {
       this.yAxisRight.setRange(minRight, maxRight);
     }
   }
-
   changeCalled = this._toggleAxisVisiblity(yAxisLeftUsed , this.yAxisLeft)  || changeCalled;
   changeCalled = this._toggleAxisVisiblity(yAxisRightUsed, this.yAxisRight) || changeCalled;
 
@@ -854,6 +881,7 @@ LineGraph.prototype._updateYAxis = function (groupIds, groupRanges) {
 
     changeCalled = this.yAxisLeft.redraw() || changeCalled;
     this.yAxisRight.stepPixelsForced = this.yAxisLeft.stepPixels;
+    this.yAxisRight.zeroCrossing = this.yAxisLeft.zeroCrossing;
     changeCalled = this.yAxisRight.redraw() || changeCalled;
   }
   else {
@@ -883,13 +911,13 @@ LineGraph.prototype._updateYAxis = function (groupIds, groupRanges) {
 LineGraph.prototype._toggleAxisVisiblity = function (axisUsed, axis) {
   var changed = false;
   if (axisUsed == false) {
-    if (axis.dom.frame.parentNode) {
-      axis.hide();
+    if (axis.dom.frame.parentNode && axis.hidden == false) {
+      axis.hide()
       changed = true;
     }
   }
   else {
-    if (!axis.dom.frame.parentNode) {
+    if (!axis.dom.frame.parentNode && axis.hidden == true) {
       axis.show();
       changed = true;
     }

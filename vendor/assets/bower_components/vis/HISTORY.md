@@ -2,6 +2,48 @@
 http://visjs.org
 
 
+## 2014-12-09, version 3.7.2
+
+### Timeline
+
+- Fixed zooming issue on mobile devices.
+
+### Graph2D
+
+- Fixed infinite loop when clearing DataSet
+
+### Network
+
+- Sidestepped double touch event from hammer (ugly.. but functional) causing
+  strange behaviour in manipulation mode
+- Better cleanup after reconnecting edges in manipulation mode
+
+
+## 2014-11-28, version 3.7.1
+
+### Timeline
+
+- Implemented selection of a range of items using Shift+Click.
+- Fixed content in range items may overflow range after zoom.
+- Fixed onAdd/onUpdate callbacks when using a DataView (thanks @motzel).
+- Fixed configuring either `start` or `end`.
+- Fixed Timeline and Graph2d getting stuck in an infinite loop in some
+  circumstances.
+- Fixed background items being selectable and editable when a height is set.
+
+### Graph2D
+
+- Added `alignZeros` option to dataAxis with default value true.
+- Fixed bug with points drawn on bargraphs
+- Fixed docs
+- Fixed height increase on scrolling if only `graphHeight` is defined.
+
+### Network
+
+- dragEnd event now does not give the selected nodes if only the viewport has been dragged #453
+- merged high DPI fix by @crubier, thanks!
+
+
 ## 2014-11-14, version 3.7.0
 
 ### Graph2D
@@ -20,7 +62,7 @@ http://visjs.org
 
 - Added a finishedRedraw event.
 - Fixed the disappearing item bug.
-
+- Fixed keycharm issue.
 
 ## 2014-11-07, version 3.6.4
 

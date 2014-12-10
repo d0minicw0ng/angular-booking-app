@@ -187,7 +187,6 @@ function Network (container, data, options) {
       type: "continuous",
       roundness: 0.5
     },
-    dynamicSmoothCurves: true,
     maxVelocity:  30,
     minVelocity:  0.1,   // px/s
     stabilize: true,  // stabilize before displaying the network
@@ -215,10 +214,12 @@ function Network (container, data, options) {
     selectable: true
   };
   this.constants = util.extend({}, this.defaultOptions);
-
+  this.pixelRatio = 1;
+  
+  
   this.hoverObj = {nodes:{},edges:{}};
   this.controlNodesActive = false;
-  this.navigationHammers = {existing:[], new: []};
+  this.navigationHammers = {existing:[], _new: []};
 
   // animation properties
   this.animationSpeed = 1/this.renderRefreshRate;
@@ -230,6 +231,7 @@ function Network (container, data, options) {
   this.targetTranslation = 0;
   this.lockedOnNodeId = null;
   this.lockedOnNodeOffset = null;
+  this.touchTime = 0;
 
   // Node variables
   var network = this;
@@ -270,6 +272,7 @@ function Network (container, data, options) {
   this.startedStabilization = false;
   this.stabilized = false;
   this.stabilizationIterations = null;
+  this.draggingNodes = false;
 
   // containers for nodes and edges
   this.calculationNodes = {};
@@ -568,9 +571,10 @@ Network.prototype.setOptions = function (options) {
   if (options) {
     var prop;
 
-    var fields = ['nodes','edges','smoothCurves','hierarchicalLayout','clustering','navigation','keyboard','dataManipulation',
-      'onAdd','onEdit','onEditEdge','onConnect','onDelete','clickToUse'
+    var fields = ['nodes','edges','smoothCurves','hierarchicalLayout','clustering','navigation',
+      'keyboard','dataManipulation','onAdd','onEdit','onEditEdge','onConnect','onDelete','clickToUse'
     ];
+    // extend all but the values in fields
     util.selectiveNotDeepExtend(fields,this.constants, options);
     util.selectiveNotDeepExtend(['color'],this.constants.nodes, options.nodes);
     util.selectiveNotDeepExtend(['color','length'],this.constants.edges, options.edges);
@@ -701,6 +705,8 @@ Network.prototype.setOptions = function (options) {
   this.start();
 };
 
+
+
 /**
  * Create the main frame for the Network.
  * This function is executed once when a Network object is created. The frame
@@ -719,10 +725,15 @@ Network.prototype._create = function () {
   this.frame.style.position = 'relative';
   this.frame.style.overflow = 'hidden';
 
-  // create the network canvas (HTML canvas element)
-  this.frame.canvas = document.createElement( 'canvas' );
+
+//////////////////////////////////////////////////////////////////
+
+  this.frame.canvas = document.createElement("canvas");
+
   this.frame.canvas.style.position = 'relative';
   this.frame.appendChild(this.frame.canvas);
+
+
   if (!this.frame.canvas.getContext) {
     var noCanvas = document.createElement( 'DIV' );
     noCanvas.style.color = 'red';
@@ -731,6 +742,23 @@ Network.prototype._create = function () {
     noCanvas.innerHTML =  'Error: your browser does not support HTML canvas';
     this.frame.canvas.appendChild(noCanvas);
   }
+  else {
+
+    var ctx = this.frame.canvas.getContext("2d");
+
+    this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio || 1);
+
+
+
+    this.frame.canvas.getContext("2d").setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+  }
+
+//////////////////////////////////////////////////////////////////
+
 
   var me = this;
   this.drag = {};
@@ -753,7 +781,6 @@ Network.prototype._create = function () {
   this.hammerFrame = Hammer(this.frame, {
     prevent_default: true
   });
-
   this.hammerFrame.on('release',   me._onRelease.bind(me) );
 
   // add the frame to the container element
@@ -827,11 +854,16 @@ Network.prototype._getPointer = function (touch) {
  * @private
  */
 Network.prototype._onTouch = function (event) {
-  this.drag.pointer = this._getPointer(event.gesture.center);
-  this.drag.pinched = false;
-  this.pinch.scale = this._getScale();
+  if (new Date().valueOf() - this.touchTime > 100) {
+    this.drag.pointer = this._getPointer(event.gesture.center);
+    this.drag.pinched = false;
+    this.pinch.scale = this._getScale();
 
-  this._handleTouch(this.drag.pointer);
+    // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
+    this.touchTime = new Date().valueOf();
+
+    this._handleTouch(this.drag.pointer);
+  }
 };
 
 /**
@@ -858,8 +890,10 @@ Network.prototype._handleDragStart = function() {
   drag.selection = [];
   drag.translation = this._getTranslation();
   drag.nodeId = null;
+  this.draggingNodes = false;
 
   if (node != null && this.constants.dragNodes == true) {
+    this.draggingNodes = true;
     drag.nodeId = node.id;
     // select the clicked node if not yet selected
     if (!node.isSelected()) {
@@ -986,7 +1020,13 @@ Network.prototype._handleDragEnd = function(event) {
   else {
     this._redraw();
   }
-  this.emit("dragEnd",{nodeIds:this.getSelection().nodes});
+  if (this.draggingNodes == false) {
+    this.emit("dragEnd",{nodeIds:[]});
+  }
+  else {
+    this.emit("dragEnd",{nodeIds:this.getSelection().nodes});
+  }
+
 }
 /**
  * handle tap/click event: select/unselect a node
@@ -1317,8 +1357,8 @@ Network.prototype.setSize = function(width, height) {
     this.frame.canvas.style.width = '100%';
     this.frame.canvas.style.height = '100%';
 
-    this.frame.canvas.width = this.frame.canvas.clientWidth;
-    this.frame.canvas.height = this.frame.canvas.clientHeight;
+    this.frame.canvas.width = this.frame.canvas.clientWidth * this.pixelRatio;
+    this.frame.canvas.height = this.frame.canvas.clientHeight * this.pixelRatio;
 
     this.constants.width = width;
     this.constants.height = height;
@@ -1329,18 +1369,18 @@ Network.prototype.setSize = function(width, height) {
     // this would adapt the width of the canvas to the width from 100% if and only if
     // there is a change.
 
-    if (this.frame.canvas.width != this.frame.canvas.clientWidth) {
-      this.frame.canvas.width = this.frame.canvas.clientWidth;
+    if (this.frame.canvas.width != this.frame.canvas.clientWidth * this.pixelRatio) {
+      this.frame.canvas.width = this.frame.canvas.clientWidth * this.pixelRatio;
       emitEvent = true;
     }
-    if (this.frame.canvas.height != this.frame.canvas.clientHeight) {
-      this.frame.canvas.height = this.frame.canvas.clientHeight;
+    if (this.frame.canvas.height != this.frame.canvas.clientHeight * this.pixelRatio) {
+      this.frame.canvas.height = this.frame.canvas.clientHeight * this.pixelRatio;
       emitEvent = true;
     }
   }
 
   if (emitEvent == true) {
-    this.emit('resize', {width:this.frame.canvas.width,height:this.frame.canvas.height, oldWidth: oldWidth, oldHeight: oldHeight});
+    this.emit('resize', {width:this.frame.canvas.width * this.pixelRatio,height:this.frame.canvas.height * this.pixelRatio, oldWidth: oldWidth * this.pixelRatio, oldHeight: oldHeight * this.pixelRatio});
   }
 };
 
@@ -1689,9 +1729,12 @@ Network.prototype.redraw = function() {
  */
 Network.prototype._redraw = function() {
   var ctx = this.frame.canvas.getContext('2d');
+
+  ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+
   // clear the canvas
-  var w = this.frame.canvas.width;
-  var h = this.frame.canvas.height;
+  var w = this.frame.canvas.width  * this.pixelRatio;
+  var h = this.frame.canvas.height  * this.pixelRatio;
   ctx.clearRect(0, 0, w, h);
 
   // set scaling and translation
@@ -1704,8 +1747,8 @@ Network.prototype._redraw = function() {
     "y": this._YconvertDOMtoCanvas(0)
   };
   this.canvasBottomRight = {
-    "x": this._XconvertDOMtoCanvas(this.frame.canvas.clientWidth),
-    "y": this._YconvertDOMtoCanvas(this.frame.canvas.clientHeight)
+    "x": this._XconvertDOMtoCanvas(this.frame.canvas.clientWidth * this.pixelRatio),
+    "y": this._YconvertDOMtoCanvas(this.frame.canvas.clientHeight * this.pixelRatio)
   };
 
 

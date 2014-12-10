@@ -4,9 +4,6 @@ var util = require('../util');
 var DataSet = require('../DataSet');
 var DataView = require('../DataView');
 var Range = require('./Range');
-var TimeAxis = require('./component/TimeAxis');
-var CurrentTime = require('./component/CurrentTime');
-var CustomTime = require('./component/CustomTime');
 var ItemSet = require('./component/ItemSet');
 var Activator = require('../shared/Activator');
 var DateUtil = require('./DateUtil');
@@ -155,6 +152,8 @@ Core.prototype._create = function (container) {
     scrollTopMin: 0
   };
   this.touch = {}; // store state information needed for touch events
+
+  this.redrawCount = 0;
 
   // attach the root panel to the provided container
   if (!container) throw new Error('No container provided');
@@ -353,6 +352,23 @@ Core.prototype.clear = function(what) {
  *                                 for the animation. Default duration is 500 ms.
  */
 Core.prototype.fit = function(options) {
+  var range = this._getDataRange();
+
+  // skip range set if there is no start and end date
+  if (range.start === null && range.end === null) {
+    return;
+  }
+
+  var animate = (options && options.animate !== undefined) ? options.animate : true;
+  this.range.setRange(range.start, range.end, animate);
+};
+
+/**
+ * Calculate the data range of the items and applies a 5% window around it.
+ * @returns {{start: Date | null, end: Date | null}}
+ * @protected
+ */
+Core.prototype._getDataRange = function() {
   // apply the data range as range
   var dataRange = this.getItemRange();
 
@@ -369,13 +385,10 @@ Core.prototype.fit = function(options) {
     end = new Date(end.valueOf() + interval * 0.05);
   }
 
-  // skip range set if there is no start and end date
-  if (start === null && end === null) {
-    return;
+  return {
+    start: start,
+    end: end
   }
-
-  var animate = (options && options.animate !== undefined) ? options.animate : true;
-  this.range.setRange(start, end, animate);
 };
 
 /**
@@ -593,7 +606,15 @@ Core.prototype.redraw = function() {
   });
   if (resized) {
     // keep repainting until all sizes are settled
-    this.redraw();
+    var MAX_REDRAWS = 3; // maximum number of consecutive redraws
+    if (this.redrawCount < MAX_REDRAWS) {
+      this.redrawCount++;
+      this.redraw();
+    }
+    else {
+      console.log('WARNING: infinite loop in redraw?')
+    }
+    this.redrawCount = 0;
   }
 
   this.emit("finishedRedraw");

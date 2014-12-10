@@ -27,6 +27,7 @@ function DataAxis (body, options, svg, linegraphOptions) {
     iconWidth: 20,
     width: '40px',
     visible: true,
+    alignZeros: true,
     customRange: {
       left: {min:undefined, max:undefined},
       right: {min:undefined, max:undefined}
@@ -61,9 +62,12 @@ function DataAxis (body, options, svg, linegraphOptions) {
   this.width = Number(('' + this.options.width).replace("px",""));
   this.minWidth = this.width;
   this.height = this.linegraphSVG.offsetHeight;
+  this.hidden = false;
 
   this.stepPixels = 25;
   this.stepPixelsForced = 25;
+  this.zeroCrossing = -1;
+
   this.lineOffset = 0;
   this.master = true;
   this.svgElements = {};
@@ -83,7 +87,6 @@ function DataAxis (body, options, svg, linegraphOptions) {
 }
 
 DataAxis.prototype = new Component();
-
 
 
 DataAxis.prototype.addGroup = function(label, graphOptions) {
@@ -125,7 +128,8 @@ DataAxis.prototype.setOptions = function (options) {
       'visible',
       'customRange',
       'title',
-      'format'
+      'format',
+      'alignZeros'
     ];
     util.selectiveExtend(fields, this.options, options);
 
@@ -203,6 +207,7 @@ DataAxis.prototype._cleanupIcons = function() {
  * Create the HTML DOM for the DataAxis
  */
 DataAxis.prototype.show = function() {
+  this.hidden = false;
   if (!this.dom.frame.parentNode) {
     if (this.options.orientation == 'left') {
       this.body.dom.left.appendChild(this.dom.frame);
@@ -221,6 +226,7 @@ DataAxis.prototype.show = function() {
  * Create the HTML DOM for the DataAxis
  */
 DataAxis.prototype.hide = function() {
+  this.hidden = true;
   if (this.dom.frame.parentNode) {
     this.dom.frame.parentNode.removeChild(this.dom.frame);
   }
@@ -237,6 +243,11 @@ DataAxis.prototype.hide = function() {
  * @param end
  */
 DataAxis.prototype.setRange = function (start, end) {
+  if (this.master == false && this.options.alignZeros == true && this.zeroCrossing != -1) {
+    if (start > 0) {
+      start = 0;
+    }
+  }
   this.range.start = start;
   this.range.end = end;
 };
@@ -334,16 +345,26 @@ DataAxis.prototype._redrawLabels = function () {
   // calculate range and step (step such that we have space for 7 characters per label)
   var minimumStep = this.master ? this.props.majorCharHeight || 10 : this.stepPixelsForced;
 
-  var step = new DataStep(this.range.start, this.range.end, minimumStep, this.dom.frame.offsetHeight, this.options.customRange[this.options.orientation]);
+  var step = new DataStep(
+    this.range.start,
+    this.range.end,
+    minimumStep,
+    this.dom.frame.offsetHeight,
+    this.options.customRange[this.options.orientation],
+    this.master == false && this.options.alignZeros       // doess the step have to align zeros? only if not master and the options is on
+  );
+
   this.step = step;
   // get the distance in pixels for a step
   // dead space is space that is "left over" after a step
   var stepPixels = (this.dom.frame.offsetHeight - (step.deadSpace * (this.dom.frame.offsetHeight / step.marginRange))) / (((step.marginRange - step.deadSpace) / step.step));
+
   this.stepPixels = stepPixels;
 
   var amountOfSteps = this.height / stepPixels;
   var stepDifference = 0;
 
+  // the slave axis needs to use the same horizontal lines as the master axis.
   if (this.master == false) {
     stepPixels = this.stepPixelsForced;
     stepDifference = Math.round((this.dom.frame.offsetHeight / stepPixels) - amountOfSteps);
@@ -351,6 +372,16 @@ DataAxis.prototype._redrawLabels = function () {
       step.previous();
     }
     amountOfSteps = this.height / stepPixels;
+
+    if (this.zeroCrossing != -1 && this.options.alignZeros == true) {
+      var zeroStepDifference = (step.marginEnd / step.step) - this.zeroCrossing;
+      if (zeroStepDifference > 0) {
+        for (var i = 0; i < zeroStepDifference; i++) {step.next();}
+      }
+      else if (zeroStepDifference < 0) {
+        for (var i = 0; i < -zeroStepDifference; i++) {step.previous();}
+      }
+    }
   }
   else {
     amountOfSteps += 0.25;
@@ -390,6 +421,10 @@ DataAxis.prototype._redrawLabels = function () {
     }
     else {
       this._redrawLine(y, orientation, 'grid horizontal minor', this.options.minorLinesOffset, this.props.minorLineWidth);
+    }
+
+    if (this.master == true && step.current == 0) {
+      this.zeroCrossing = max;
     }
 
     max++;
@@ -544,7 +579,7 @@ DataAxis.prototype._calculateCharSize = function () {
   // determine the char width and height on the minor axis
   if (!('minorCharHeight' in this.props)) {
     var textMinor = document.createTextNode('0');
-    var measureCharMinor = document.createElement('DIV');
+    var measureCharMinor = document.createElement('div');
     measureCharMinor.className = 'yAxis minor measure';
     measureCharMinor.appendChild(textMinor);
     this.dom.frame.appendChild(measureCharMinor);
@@ -557,7 +592,7 @@ DataAxis.prototype._calculateCharSize = function () {
 
   if (!('majorCharHeight' in this.props)) {
     var textMajor = document.createTextNode('0');
-    var measureCharMajor = document.createElement('DIV');
+    var measureCharMajor = document.createElement('div');
     measureCharMajor.className = 'yAxis major measure';
     measureCharMajor.appendChild(textMajor);
     this.dom.frame.appendChild(measureCharMajor);
@@ -570,7 +605,7 @@ DataAxis.prototype._calculateCharSize = function () {
 
   if (!('titleCharHeight' in this.props)) {
     var textTitle = document.createTextNode('0');
-    var measureCharTitle = document.createElement('DIV');
+    var measureCharTitle = document.createElement('div');
     measureCharTitle.className = 'yAxis title measure';
     measureCharTitle.appendChild(textTitle);
     this.dom.frame.appendChild(measureCharTitle);

@@ -127,7 +127,7 @@ Range.prototype.setRange = function(start, end, animate) {
     var initTime = new Date().valueOf();
     var anyChanged = false;
 
-    function next() {
+    var next = function () {
       if (!me.props.touch.dragging) {
         var now = new Date().valueOf();
         var time = now - initTime;
@@ -285,8 +285,8 @@ Range.prototype._applyRange = function(start, end) {
   var changed = (this.start != newStart || this.end != newEnd);
 
   // if the new range does NOT overlap with the old range, emit checkRangedItems to avoid not showing ranged items (ranged meaning has end time, not neccesarily of type Range)
-  if (!((newStart >= this.start && newStart   <= this.start) || (newEnd   >= this.start && newEnd   <= this.end)) &&
-      !((this.start >= newStart && this.start <= newEnd)     || (this.end >= newStart   && this.end <= newEnd) )) {
+  if (!((newStart >= this.start && newStart   <= this.end) || (newEnd   >= this.start && newEnd   <= this.end)) &&
+      !((this.start >= newStart && this.start <= newEnd)   || (this.end >= newStart   && this.end <= newEnd) )) {
     this.body.emitter.emit('checkRangedItems');
   }
 
@@ -528,19 +528,19 @@ Range.prototype._onPinch = function (event) {
     }
 
     var scale = 1 / (event.gesture.scale + this.scaleOffset);
-    var center = this._pointerToDate(this.props.touch.center);
+    var centerDate = this._pointerToDate(this.props.touch.center);
 
     var hiddenDuration = DateUtil.getHiddenDurationBetween(this.body.hiddenDates, this.start, this.end);
-    var hiddenDurationBefore = DateUtil.getHiddenDurationBefore(this.body.hiddenDates, this, center);
+    var hiddenDurationBefore = DateUtil.getHiddenDurationBefore(this.body.hiddenDates, this, centerDate);
     var hiddenDurationAfter = hiddenDuration - hiddenDurationBefore;
 
     // calculate new start and end
-    var newStart = (center-hiddenDurationBefore) + (this.start - (center-hiddenDurationBefore)) * scale;
-    var newEnd   = (center+hiddenDurationAfter) + (this.end - (center+hiddenDurationAfter)) * scale;
+    var newStart = (centerDate - hiddenDurationBefore) + (this.props.touch.start - (centerDate - hiddenDurationBefore)) * scale;
+    var newEnd = (centerDate + hiddenDurationAfter) + (this.props.touch.end - (centerDate + hiddenDurationAfter)) * scale;
 
     // snapping times away from hidden zones
     this.startToFront = 1 - scale > 0 ? false : true; // used to do the right autocorrection with periodic hidden times
-    this.endToFront   = scale - 1 > 0 ? false : true; // used to do the right autocorrection with periodic hidden times
+    this.endToFront = scale - 1 > 0 ? false : true; // used to do the right autocorrection with periodic hidden times
 
     var safeStart = DateUtil.snapAwayFromHidden(this.body.hiddenDates, newStart, 1 - scale, true);
     var safeEnd = DateUtil.snapAwayFromHidden(this.body.hiddenDates, newEnd, scale - 1, true);
