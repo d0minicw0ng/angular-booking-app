@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require ../../../vendor/assets/bower_components/angular/angular.min
+//= require ../../../vendor/assets/bower_components/angular/angular
 //= require ng-rails-csrf
 //= require angular-rails-templates
 
