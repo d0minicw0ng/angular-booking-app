@@ -2,4 +2,4 @@
 
 This is a sample appointment booking system written in AngularJS and Ruby on Rails.
 It has a half baked design (mostly because there's not a landing page) but it's usable. 
-Feel free to use my code if you find it useful :-) (Please! Shut up and take my code!)
+Feel free to use my code if you find it useful :smile: (Please! Shut up and take my code!)
